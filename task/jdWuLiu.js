@@ -209,7 +209,7 @@ function showMsg(userInfo, wuLiuDetail, orderId, k) {
     $.name = `京东物流 账号：${userInfo.baseInfo.nickname}`;
     $.subt = ``;
     $.desc = `📦${carrier.replace(
-      '包裹',
+      /包裹|大件/,
       ''
     )}：${carriageId}\n📱手机尾号：${recvMobile.slice(-4)}`;
     $.info = `📘包含商品：${orderWareList[0].itemName}\n📗商品数目：${orderWareList.length}\n📕订单编号：${orderId}`;
