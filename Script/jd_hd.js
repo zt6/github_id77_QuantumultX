@@ -361,19 +361,43 @@ try {
           vConsole.$.removeClass($btns, 'hide');
         }
 
-        if (_currentPin && document.querySelector("#_" + _currentPin)) {
-          setTimeout(() => {
-            document.querySelector("#_" + _currentPin).style.background = '#238636';
-          });
-        }	 
-        
         const fontSize = document.querySelector('#__vconsole').style.fontSize;
 
         if(fontSize) {
           document.querySelector('#_btns').style.fontSize = fontSize;
         }
+
+        const _currentCKDom = document.querySelector("#_" + _currentPin);
+
+        if (_currentPin && _currentCKDom) {
+          setTimeout(() => {
+            _currentCKDom.style.background = '#238636';
+          });
+        }
         
       });
+
+      function scrollTopToCKDom() {
+        const fontSize = document.querySelector('#__vconsole').style.fontSize;
+
+        const _currentCKDom = document.querySelector("#_" + _currentPin);
+        const _VCcontext = document.querySelector('.vc-content');
+        let cookieIndex;
+
+        if (_currentCKDom) {
+          cookieIndex = _currentCKDom.dataset.cookieIndex - 1;
+
+          if(_VCcontext && cookieIndex) {
+            setTimeout(() => {
+            _VCcontext.scrollTop  = cookieIndex * (fontSize || 16) * 2.5;
+            }); 
+          }
+        }
+      }
+
+      JDCKPlugin.on('show', scrollTopToCKDom);
+      JDCKPlugin.on('showConsole', scrollTopToCKDom);
+
       
       if (${isJD}) {
         vConsole.addPlugin(JDCKPlugin);
