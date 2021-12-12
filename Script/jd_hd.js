@@ -167,25 +167,31 @@ try {
       }
     }
 
-    const _host = window.location.host;
-
     function _clearData() {
       sessionStorage.clear();
       localStorage.clear();
-      let _key;
-      const _cookieKeys = Object.keys(Cookies.get());
-      for (let n = 0; n < _cookieKeys.length; n++) {
-        _key = _cookieKeys[n];
-      }
-      
-      const _hostBlocks = _host.split('.');
-      let _block = _hostBlocks[0];
-      for (let b = 1; b < _hostBlocks.length; b++) {
-        _block = _hostBlocks[b] + "." + _block;
-        Cookies.remove(_key, { path: '/', domain: "." + _block });
-      }
 
-      // Cookies.remove(_key, { path: '/', domain: '.jd.com' });
+      const uris = window.location.hostname.split('.');
+
+      Object.keys(Cookies.get()).forEach(function (cookieName) {
+        let uri = '.' + uris[uris.length - 1];
+        Cookies.remove(cookieName, {
+          expires: 'Thu, 01 Jan 1970 00:00:00 GMT',
+        });
+        Cookies.remove(cookieName, {
+          path: '/',
+          expires: 'Thu, 01 Jan 1970 00:00:00 GMT',
+        });
+        for (let j = uris.length - 2; j >= 0; j--) {
+          uri = '.' + uris[j] + uri;
+          Cookies.remove(cookieName, {
+            domain: uri,
+            path: '/',
+            expires: 'Thu, 01 Jan 1970 00:00:00 GMT',
+          });
+        }
+      });
+
     }
     
     function _setCookie(cookie) {
