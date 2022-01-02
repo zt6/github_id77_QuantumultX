@@ -191,7 +191,7 @@ function setReqOpts(method, _360buy_param_json) {
     if (platformType === 'DIY') {
       if (!diyApi) return;
 
-      const diyData = await getData({ url: `${diyApi}?skuId=${skuId}` });
+      const diyData = await getData({ url: `${diyApi}${skuId}` });
       // $.log(JSON.stringify(diyData));
 
       $.subt = '';
