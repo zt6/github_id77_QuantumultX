@@ -54,7 +54,6 @@ const opts = {
   headers: {
     Accept: `*/*`,
     Connection: `keep-alive`,
-    Host: `wq.jd.com`,
     'Accept-Language': 'zh-cn',
     'Accept-Encoding': 'gzip, deflate, br',
     'User-Agent': `Mozilla/5.0 (iPhone; CPU iPhone OS 14_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.1 Mobile/15E148 Safari/604.1`,
@@ -113,8 +112,8 @@ const opts = {
 function getUserInfo() {
   return new Promise((resolve) => {
     opts.url =
-      'https://wq.jd.com/user_new/info/GetJDUserInfoUnion?orgFlag=JD_PinGou_New&callSource=mainorder&channel=4&isHomewhite=0&sceneval=2&sceneval=2&g_login_type=1g_ty=ls';
-    opts.headers.Referer = `https://home.m.jd.com/myJd/home.action`;
+      'https://me-api.jd.com/user_new/info/GetJDUserInfoUnion?orgFlag=JD_PinGou_New&callSource=mainorder&channel=4&isHomewhite=0&sceneval=2&g_login_type=1g_ty=ls';
+    opts.headers.Referer = `https://home.m.jd.com/`;
 
     $.get(opts, (err, resp, data) => {
       let userInfo;
