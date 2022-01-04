@@ -142,7 +142,7 @@ async function all(cookie, jrBody) {
         // JingDongSubsidy(stop), //京东金贴
         JingDongGetCash(stop), //京东领现金
         // JingDongShake(stop), //京东摇一摇
-        JDSecKilling(stop), //京东秒杀
+        // JDSecKilling(stop), //京东秒杀
         // JingRongDoll(stop, 'JRDoll', '京东金融-签壹', '4D25A6F482'),
         // JingRongDoll(stop, 'JRThreeDoll', '京东金融-签叁', '69F5EC743C'),
         // JingRongDoll(stop, 'JRFourDoll', '京东金融-签肆', '30C4F86264'),
@@ -192,18 +192,18 @@ async function all(cookie, jrBody) {
         //   '京东商城-数码',
         //   '4SWjnZSCTHPYjE5T7j35rxxuMTb6'
         // ), //京东数码电器馆
-        JDUserSignPre(
-          stop,
-          'JDWomen',
-          '京东商城-女装',
-          'DpSh7ma8JV7QAxSE2gJNro8Q2h9'
-        ), //京东女装馆
-        JDUserSignPre(
-          stop,
-          'JDBook',
-          '京东商城-图书',
-          '3SC6rw5iBg66qrXPGmZMqFDwcyXi'
-        ), //京东图书
+        // JDUserSignPre(
+        //   stop,
+        //   'JDWomen',
+        //   '京东商城-女装',
+        //   'DpSh7ma8JV7QAxSE2gJNro8Q2h9'
+        // ), //京东女装馆
+        // JDUserSignPre(
+        //   stop,
+        //   'JDBook',
+        //   '京东商城-图书',
+        //   '3SC6rw5iBg66qrXPGmZMqFDwcyXi'
+        // ), //京东图书
         // JDUserSignPre(stop, 'ReceiveJD', '京东商城-领豆', 'Ni5PUSK7fzZc4EKangHhqPuprn2'), //京东-领京豆
         // JingRongDoll(stop, 'JTDouble', '京东金贴-双签', '1DF13833F7'), //京东金融 金贴双签
         // JingRongDoll(stop, 'XJDouble', '金融现金-双签', 'F68B2C3E71', '', '', '', 'xianjin') //京东金融 现金双签
@@ -227,36 +227,36 @@ async function all(cookie, jrBody) {
         //   '京东商城-电竞',
         //   'CHdHQhA5AYDXXQN9FLt3QUAPRsB'
         // ), //京东电竞
-        JDUserSignPre(
-          stop,
-          'JDClothing',
-          '京东商城-服饰',
-          '4RBT3H9jmgYg1k2kBnHF8NAHm7m8'
-        ), //京东服饰
+        // JDUserSignPre(
+        //   stop,
+        //   'JDClothing',
+        //   '京东商城-服饰',
+        //   '4RBT3H9jmgYg1k2kBnHF8NAHm7m8'
+        // ), //京东服饰
         // JDUserSignPre(
         //   stop,
         //   'JDSuitcase',
         //   '京东商城-箱包',
         //   'ZrH7gGAcEkY2gH8wXqyAPoQgk6t'
         // ), //京东箱包馆
-        JDUserSignPre(
-          stop,
-          'JDSchool',
-          '京东商城-校园',
-          '2QUxWHx5BSCNtnBDjtt5gZTq7zdZ'
-        ), //京东校园
+        // JDUserSignPre(
+        //   stop,
+        //   'JDSchool',
+        //   '京东商城-校园',
+        //   '2QUxWHx5BSCNtnBDjtt5gZTq7zdZ'
+        // ), //京东校园
         // JDUserSignPre(
         //   stop,
         //   'JDHealth',
         //   '京东商城-健康',
         //   'w2oeK5yLdHqHvwef7SMMy4PL8LF'
         // ), //京东健康
-        JDUserSignPre(
-          stop,
-          'JDShand',
-          '京东拍拍-二手',
-          '3S28janPLYmtFxypu37AYAGgivfp'
-        ), //京东拍拍二手
+        // JDUserSignPre(
+        //   stop,
+        //   'JDShand',
+        //   '京东拍拍-二手',
+        //   '3S28janPLYmtFxypu37AYAGgivfp'
+        // ), //京东拍拍二手
         // JDUserSignPre(
         //   stop,
         //   'JDClean',
@@ -277,12 +277,12 @@ async function all(cookie, jrBody) {
         // ), // 京东小家电
         // JDUserSignPre(stop, 'JDJewels', '京东商城-珠宝', 'zHUHpTHNTaztSRfNBFNVZscyFZU'), //京东珠宝馆
         // JDUserSignPre(stop, 'JDMakeup', '京东商城-美妆', '2smCxzLNuam5L14zNJHYu43ovbAP'), //京东美妆馆
-        JDUserSignPre(
-          stop,
-          'JDVege',
-          '京东商城-菜场',
-          'Wcu2LVCFMkBP3HraRvb7pgSpt64'
-        ), //京东菜场
+        // JDUserSignPre(
+        //   stop,
+        //   'JDVege',
+        //   '京东商城-菜场',
+        //   'Wcu2LVCFMkBP3HraRvb7pgSpt64'
+        // ), //京东菜场
         // JDUserSignPre(stop, 'JDLive', '京东智能-生活', 'KcfFqWvhb5hHtaQkS4SD1UU6RcQ') //京东智能生活
       ]);
       // await JingRongDoll(
@@ -307,7 +307,7 @@ async function all(cookie, jrBody) {
       await JingDongGetCash(Wait(stop)); //京东领现金
       // await JingDongSubsidy(Wait(stop)); //京东金贴
       // await JingDongShake(Wait(stop)); //京东摇一摇
-      await JDSecKilling(Wait(stop)); //京东秒杀
+      // await JDSecKilling(Wait(stop)); //京东秒杀
       // await JingRongDoll(Wait(stop), 'JRThreeDoll', '京东金融-签叁', '69F5EC743C');
       // await JingRongDoll(Wait(stop), 'JRFourDoll', '京东金融-签肆', '30C4F86264');
       // await JingRongDoll(Wait(stop), 'JRFiveDoll', '京东金融-签伍', '1D06AA3B0F');
@@ -351,18 +351,18 @@ async function all(cookie, jrBody) {
       //   '京东商城-箱包',
       //   'ZrH7gGAcEkY2gH8wXqyAPoQgk6t'
       // ); //京东箱包馆
-      await JDUserSignPre(
-        Wait(stop),
-        'JDClothing',
-        '京东商城-服饰',
-        '4RBT3H9jmgYg1k2kBnHF8NAHm7m8'
-      ); //京东服饰
-      await JDUserSignPre(
-        Wait(stop),
-        'JDSchool',
-        '京东商城-校园',
-        '2QUxWHx5BSCNtnBDjtt5gZTq7zdZ'
-      ); //京东校园
+      // await JDUserSignPre(
+      //   Wait(stop),
+      //   'JDClothing',
+      //   '京东商城-服饰',
+      //   '4RBT3H9jmgYg1k2kBnHF8NAHm7m8'
+      // ); //京东服饰
+      // await JDUserSignPre(
+      //   Wait(stop),
+      //   'JDSchool',
+      //   '京东商城-校园',
+      //   '2QUxWHx5BSCNtnBDjtt5gZTq7zdZ'
+      // ); //京东校园
       // await JDUserSignPre(
       //   Wait(stop),
       //   'JDHealth',
@@ -393,31 +393,31 @@ async function all(cookie, jrBody) {
       //   '京东商城-数码',
       //   '4SWjnZSCTHPYjE5T7j35rxxuMTb6'
       // ); //京东数码电器馆
-      await JDUserSignPre(
-        Wait(stop),
-        'JDWomen',
-        '京东商城-女装',
-        'DpSh7ma8JV7QAxSE2gJNro8Q2h9'
-      ); //京东女装馆
-      await JDUserSignPre(
-        Wait(stop),
-        'JDBook',
-        '京东商城-图书',
-        '3SC6rw5iBg66qrXPGmZMqFDwcyXi'
-      ); //京东图书
-      await JDUserSignPre(
-        Wait(stop),
-        'JDShand',
-        '京东拍拍-二手',
-        '3S28janPLYmtFxypu37AYAGgivfp'
-      ); //京东拍拍二手
+      // await JDUserSignPre(
+      //   Wait(stop),
+      //   'JDWomen',
+      //   '京东商城-女装',
+      //   'DpSh7ma8JV7QAxSE2gJNro8Q2h9'
+      // ); //京东女装馆
+      // await JDUserSignPre(
+      //   Wait(stop),
+      //   'JDBook',
+      //   '京东商城-图书',
+      //   '3SC6rw5iBg66qrXPGmZMqFDwcyXi'
+      // ); //京东图书
+      // await JDUserSignPre(
+      //   Wait(stop),
+      //   'JDShand',
+      //   '京东拍拍-二手',
+      //   '3S28janPLYmtFxypu37AYAGgivfp'
+      // ); //京东拍拍二手
       // await JDUserSignPre(Wait(stop), 'JDMakeup', '京东商城-美妆', '2smCxzLNuam5L14zNJHYu43ovbAP'); //京东美妆馆
-      await JDUserSignPre(
-        Wait(stop),
-        'JDVege',
-        '京东商城-菜场',
-        'Wcu2LVCFMkBP3HraRvb7pgSpt64'
-      ); //京东菜场
+      // await JDUserSignPre(
+      //   Wait(stop),
+      //   'JDVege',
+      //   '京东商城-菜场',
+      //   'Wcu2LVCFMkBP3HraRvb7pgSpt64'
+      // ); //京东菜场
       // await JDUserSignPre(
       //   Wait(stop),
       //   'JDaccompany',
