@@ -76,8 +76,7 @@ try {
       : `<button id="smzdm" class="_btn hide"></button><button id="manmanbuy" class="_btn hide"></button>`) +
     `</div>`;
 
-  html =
-    html.replace(/(<\/html>)/, '') +
+  html +=
     `
   <style>
     * {
@@ -415,7 +414,6 @@ try {
       
     }
   </script>
-</html>
 `;
 } catch (error) {
   console.log(error);
