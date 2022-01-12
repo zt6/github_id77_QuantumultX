@@ -76,7 +76,8 @@ try {
       : `<button id="smzdm" class="_btn hide"></button><button id="manmanbuy" class="_btn hide"></button>`) +
     `</div>`;
 
-  html +=
+  html = html.replace(
+    /(<body)/,
     `
   <style>
     * {
@@ -414,12 +415,15 @@ try {
       
     }
   </script>
-`;
+<body`
+  );
 } catch (error) {
   console.log(error);
 }
 
-$.done({ body: html });
+$.done({
+  body: html,
+});
 
 // https://github.com/chavyleung/scripts/blob/master/Env.js
 // prettier-ignore
