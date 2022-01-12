@@ -77,8 +77,8 @@ try {
     `</div>`;
 
   html = html.replace(
-    /(<body)/,
-    `
+    /(<body.*?>)/,
+    `$1
   <style>
     * {
       -webkit-user-select: auto !important;
@@ -414,8 +414,7 @@ try {
       },3000);
       
     }
-  </script>
-<body`
+  </script>`
   );
 } catch (error) {
   console.log(error);
