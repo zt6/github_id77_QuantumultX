@@ -265,7 +265,9 @@ try {
     _script.src = "https://cdnjs.cloudflare.com/ajax/libs/vConsole/3.8.1/vconsole.min.js";
     // _script.doneState = { loaded: true, complete: true};
     _script.onload = function() {
-        __init();
+        window.onload = setTimeout(() => {
+          __init()
+        },200);
         console.log("初始化成功");
     };
     
@@ -318,16 +320,6 @@ try {
        
         const toolList = [];
         toolList.push({
-          name: "领券页面",
-          global: false,
-          onClick: function (event) {
-            vConsole.showTab("default");
-             
-             // 脚本2
-             eval(function(){function c(){let d=document.getElementById(\"loadJs\"),e=document.createElement(\"script\");d&&document.getElementsByTagName(\"head\")[0].removeChild(d),e.id=\"loadJs\",e.type=\"text/javascript\",e.src=\"https://krapnik.cn/tools/JDCouponAssistant/bundle.js\",document.getElementsByTagName(\"head\")[0].appendChild(e)}c()}())
-
-          },
-        },{
           name: "显隐图标",
           global: false,
           onClick: function (event) {
