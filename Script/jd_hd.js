@@ -265,9 +265,9 @@ try {
     _script.src = "https://cdnjs.cloudflare.com/ajax/libs/vConsole/3.8.1/vconsole.min.js";
     // _script.doneState = { loaded: true, complete: true};
     _script.onload = function() {
-        window.onload = setTimeout(() => {
+        setTimeout(() => {
           __init()
-        },200);
+        });
         console.log("初始化成功");
     };
     
@@ -275,23 +275,23 @@ try {
     document.getElementsByTagName('head')[0].appendChild(_script);
 
     function _changeBtns() {
-      const $btns = vConsole.$.all('._btn');
+      const $btns = __vConsole.$.all('._btn');
 
-      if (vConsole.$.hasClass($btns[0], 'hide')) {
+      if (__vConsole.$.hasClass($btns[0], 'hide')) {
         // do something
-        vConsole.$.removeClass($btns, 'hide');
+        __vConsole.$.removeClass($btns, 'hide');
       } else {
-        vConsole.$.addClass($btns, 'hide'); 
+        __vConsole.$.addClass($btns, 'hide'); 
       }
     }
 
     function _changeMitmUI() {
       const vcSwitch = document.querySelector('.vc-switch');
       if (vcSwitch.style.display == 'none') {
-        vConsole.showSwitch();
+        __vConsole.showSwitch();
         localStorage.setItem('vConsole_switch_hide', 'N')
       } else {
-        vConsole.hideSwitch();
+        __vConsole.hideSwitch();
         localStorage.setItem('vConsole_switch_hide', 'Y')
       }
 
@@ -300,12 +300,12 @@ try {
     
     function __init () {
       
-      window.vConsole = new VConsole();
+      window.__vConsole = new VConsole();
       if (needHideSwitch) {
-        vConsole.hideSwitch(); 
+        __vConsole.hideSwitch(); 
       }
 
-      vConsole.setSwitchPosition(10, 50);
+      __vConsole.setSwitchPosition(10, 50);
       const JDCKPlugin = new VConsole.VConsolePlugin("jd_cookie", "京东CK");
 
       JDCKPlugin.on("renderTab", function (callback) {
@@ -323,7 +323,7 @@ try {
           name: "显隐图标",
           global: false,
           onClick: function (event) {
-            vConsole.hide();
+            __vConsole.hide();
             _changeBtns();
           },
         });
@@ -334,8 +334,8 @@ try {
 
         const cksDom = document.querySelector('#cks');
         cksDom.addEventListener('click', (e) => {
-          vConsole.show();
-          vConsole.showTab("jd_cookie");
+          __vConsole.show();
+          __vConsole.showTab("jd_cookie");
           e.stopPropagation();
         })
         cksDom.addEventListener('dblclick', function (e) {
@@ -355,8 +355,8 @@ try {
       JDCKPlugin.on('ready', function() {
 
         if (!needHideSwitch) {
-          const $btns = vConsole.$.all('._btn');
-          vConsole.$.removeClass($btns, 'hide');
+          const $btns = __vConsole.$.all('._btn');
+          __vConsole.$.removeClass($btns, 'hide');
         }
 
         const fontSize = document.querySelector('#__vconsole').style.fontSize;
@@ -398,7 +398,7 @@ try {
 
       
       if (${isJD}) {
-        vConsole.addPlugin(JDCKPlugin);
+        __vConsole.addPlugin(JDCKPlugin);
       }
 
       setTimeout(() => {
