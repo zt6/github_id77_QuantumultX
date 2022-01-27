@@ -231,7 +231,7 @@ function showMsg(userInfo, wuLiuDetail, k) {
     $.desc = `📦${carriersName.replace(/包裹|大件/, '')}：${waybillCode}`;
     $.phone =
       $.needPhone === 'Y'
-        ? `\n📱手机尾号：${$.phoneList[userInfo.baseInfo.curPin] || '无'}`
+        ? `📱手机尾号：${$.phoneList[userInfo.baseInfo.curPin] || '无'}\n`
         : '';
 
     // $.info = `📘包含商品：${shopName}\n📗商品数目：${sum}\n📕订单编号：${orderId}`;
@@ -277,6 +277,7 @@ function showMsg(userInfo, wuLiuDetail, k) {
 
     $.msg($.name, $.subt, $.desc + '\n' + $.wl, {
       mediaUrl: $.imgPath,
+      'update-pasteboard': `${$.desc}\n${$.phone}${$.info}`,
     });
 
     resolve();
