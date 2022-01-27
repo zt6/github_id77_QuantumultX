@@ -252,6 +252,7 @@ function showMsg(userInfo, wuLiuDetail, k) {
       '\n' +
       $.desc +
       '\n' +
+      $.phone +
       $.info +
       '\n' +
       $.yg +
