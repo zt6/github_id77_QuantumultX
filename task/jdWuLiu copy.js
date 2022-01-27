@@ -1,6 +1,7 @@
 /**
  * 京东多账号-物流派件提醒
  * 派送状态会跑一次，通知一次
+ * 超过30天的订单，不通知不显示
  *
  *
  * > 同时支持使用 NobyDa 与 domplin 脚本的京东 cookie
@@ -19,14 +20,10 @@
  */
 const $ = new Env('京东物流');
 $.PAGE_MAX_KEY = 'id77_jdWuLiu_pageMax';
-$.WAYBILL_CODE_ARR_KEY = 'id77_waybillCodeArr';
+$.CARRIAGE_ID_ARR_KEY = 'id77_carriageIdArr';
 $.USER_NUM = 'id77_jdWuLiu_userNum';
-$.NEED_PHONE = 'id77_jdWuLiu_needPhone';
-$.PHONE_LIST_KEY = 'id77_jdWuLiu_phoneList';
 $.pageMax = $.getData($.PAGE_MAX_KEY) || 10;
-$.waybillCodeArr = JSON.parse($.getData($.WAYBILL_CODE_ARR_KEY) || '[]');
-$.needPhone = JSON.parse($.getData($.NEED_PHONE) || 'N');
-$.phoneList = JSON.parse($.getData($.PHONE_LIST_KEY) || '{}');
+$.carriageIdArr = JSON.parse($.getData($.CARRIAGE_ID_ARR_KEY) || '[]');
 $.isMuteLog = true;
 $.page = 1;
 
@@ -40,7 +37,7 @@ const extraCookies = JSON.parse($.getData('CookiesJD') || '[]').map(
 cookies = Array.from(new Set([...cookies, ...extraCookies]));
 
 // 清除过期缓存
-const length = $.waybillCodeArr.length;
+const length = $.carriageIdArr.length;
 $.log(`💡缓存数据：${length}条`);
 
 $.userNum = $.getData($.USER_NUM) || cookies.length;
@@ -48,8 +45,8 @@ $.userNum = $.getData($.USER_NUM) || cookies.length;
 const total = $.pageMax * $.userNum;
 if (length > total) {
   $.setData(
-    JSON.stringify($.waybillCodeArr.slice(length - total, length)),
-    $.WAYBILL_CODE_ARR_KEY
+    JSON.stringify($.carriageIdArr.slice(length - total, length)),
+    $.CARRIAGE_ID_ARR_KEY
   );
 }
 
@@ -64,19 +61,11 @@ const opts = {
 };
 
 !(async () => {
-  let userInfo, orderList, order, wuLiuDetail;
-
-  const blockWaybillNewStatusName = [
-    '已取消',
-    '退款成功',
-    '处理成功',
-    '已消费',
-    '充值成功',
-  ];
+  let cookie, userInfo, orderList, order, wuLiuDetail;
 
   for (let index = 0; index < $.userNum; index++) {
-    $.cookie = cookies[index];
-    opts.headers.Cookie = $.cookie;
+    cookie = cookies[index];
+    opts.headers.Cookie = cookie;
 
     userInfo = await getUserInfo();
     orderList = [];
@@ -84,28 +73,35 @@ const opts = {
     for (let p = 1; p <= $.pageMax / 10; p++) {
       $.page = p;
 
-      orderList = [...orderList, ...(await getShopMallOrderCourierForList())];
+      orderList = [...orderList, ...(await getOrderList())];
+    }
 
-      for (let w = 0; w < orderList.length; w++) {
-        const wuLiuDetail = orderList[w];
-        const { waybillNewStatusName, orderState } = wuLiuDetail;
+    for (let k = 0; k < orderList.length; k++) {
+      const {
+        orderId,
+        orderType,
+        stateInfo: { stateName },
+      } = orderList[k];
 
-        $.logText = '';
-        if (w === 0) {
-          $.logText = '====================================\n';
-          $.logText += `🙆🏻‍♂️账号：${userInfo.baseInfo.nickname}\n`;
-        }
-
-        // 忽略取消订单以及非实物订单
-        if (
-          // orderState !== 75 &&
-          // orderState !== 37 &&
-          !blockWaybillNewStatusName.includes(waybillNewStatusName)
-        ) {
-          await showMsg(userInfo, wuLiuDetail, w);
-          console.log($.logText);
-          await $.wait(777);
-        }
+      $.logText = '';
+      if (k === 0) {
+        $.logText = '====================================\n';
+        $.logText += `🙆🏻‍♂️账号：${userInfo.baseInfo.nickname}\n`;
+      }
+      // 忽略取消订单以及非实物订单
+      if (
+        stateName !== '已取消' &&
+        stateName !== '退款成功' &&
+        stateName !== '处理成功' &&
+        orderType !== '75' &&
+        stateName !== '已消费' &&
+        orderType !== '37' &&
+        stateName !== '充值成功'
+      ) {
+        wuLiuDetail = await getWuLiu(orderId);
+        await showMsg(userInfo, wuLiuDetail, orderId, k);
+        console.log($.logText);
+        await $.wait(777);
       }
     }
   }
@@ -133,62 +129,16 @@ function getUserInfo() {
   });
 }
 
-function getShopMallOrderCourierForList() {
+function getOrderList() {
   return new Promise((resolve) => {
-    const uuid = createUUID();
-    let tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
+    opts.url = `https://wq.jd.com/bases/orderlist/list?order_type=0&start_page=${$.page}&page_size=10`;
+    opts.headers.Referer = `https://wqs.jd.com/order/orderlist_merge.shtml?sceneval=2&orderType=waitReceipt`;
 
-    let threeMonthsAgo = new Date();
-    threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() + 1 - 3);
-    threeMonthsAgo.setDate(threeMonthsAgo.getDate() - 1);
-
-    const opts = {
-      url: `https://lop-proxy.jd.com/search/getShopMallOrderCourierForList`,
-      body: JSON.stringify([
-        {
-          pin: '$cooMrdGatewayUid$',
-          size: 10,
-          page: $.page,
-          startDate: $.time(`yyyy-MM-dd HH:mm:ss`, threeMonthsAgo),
-          endDate: $.time(`yyyy-MM-dd HH:mm:ss`, tomorrow),
-        },
-      ]),
-      headers: {
-        d_brand: `iPhone`,
-        screen: `414x896`,
-        Host: `lop-proxy.jd.com`,
-        lang: `zh_CN`,
-        'Accept-Encoding': `gzip, deflate, br`,
-        client: `WX-XCX`,
-        Connection: `keep-alive`,
-        uuid: uuid,
-        'Accept-Language': `zh-Hans-CN;q=1, en-CN;q=0.9`,
-        version: `1642590577000`,
-        build: `1642590577000`,
-        clientVersion: `1642590577000`,
-        'User-Agent': `JD4iPhone/167945 (iPhone; iOS 15.2; Scale/2.00)`,
-        Referer: `https://service.vapp.jd.com/ao0f5c7f4df74ea1b6/1/page-frame.html`,
-        sessiontraceid: uuid,
-        ClientInfo: `{"appName":"c2c","client":"m"}`,
-        'Content-Type': `application/json`,
-        sdkversion: `1.11.12`,
-        Accept: `application/json, text/plain, */*`,
-        osversion: `iOS 15.2`,
-        'X-Requested-With': `XMLHttpRequest`,
-        'LOP-DN': `logistics-mrd.jd.com`,
-        d_model: `iPhone XR<iPhone11,8>`,
-        AppParams: `{"appid":158,"ticket_type":"m"}`,
-        requestid: createUUID(),
-        Cookie: $.cookie,
-      },
-    };
-
-    $.post(opts, (err, resp, data) => {
+    $.get(opts, (err, resp, data) => {
       let orderList;
 
       try {
-        orderList = JSON.parse(data).data.data;
+        orderList = JSON.parse(data).orderList;
       } catch (e) {
         $.logErr(e, resp);
       } finally {
@@ -198,29 +148,58 @@ function getShopMallOrderCourierForList() {
   });
 }
 
-function createUUID(a = 16) {
-  const c = 'abcdefghijklmnopqrstuvwxyz0123456789';
-  let e = '';
-  for (var g = 0; g < a; g++) e += c[Math.ceil(1e8 * Math.random()) % c.length];
-  return e;
+function getWuLiu(orderId) {
+  return new Promise((resolve) => {
+    opts.url = `https://wq.jd.com/bases/wuliudetail/dealloglist?deal_id=${orderId}`;
+    opts.headers.Referer = `https://wqs.jd.com/order/deal_wuliu.shtml?from=orderdetail&dealState=15&dealId=${orderId}&orderType=18&sceneval=2`;
+
+    $.get(opts, (err, resp, data) => {
+      let detail;
+
+      try {
+        detail = JSON.parse(data);
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve(detail);
+      }
+    });
+  });
 }
 
-function showMsg(userInfo, wuLiuDetail, k) {
+function showMsg(userInfo, wuLiuDetail, orderId, k) {
   return new Promise((resolve) => {
     const {
-      carriersName = '',
-      waybillCode = '无',
-      shopName,
-      sum,
-      orderId,
-      // 0006 派送
-      // 0008 可能代签收/快递柜/物流寄存点
-      waybillNewStatus,
-      waybillNewStatusName,
-      imgPath,
-      deliveryPromiseTime,
-      orderNode,
+      carrier = '',
+      carriageId,
+      recvMobile,
+      orderWareList,
+      dealLogList,
     } = wuLiuDetail;
+    // 部分订单属于敏感信息，收货之后，物流信息不会返回
+    // 比如购药订单
+    if (!dealLogList) {
+      return resolve();
+    }
+    const index = dealLogList.length - 1;
+    const dealLog =
+      dealLogList.length > 0 ? dealLogList[index].wlStateDesc : '无';
+    // 0006 派送
+    // 0008 可能代签收/快递柜/物流寄存点
+    const wuLiuStateCode = dealLogList[index].groupType;
+
+    const _30DayBefore = Date.now() - 30 * 24 * 60 * 60 * 1000;
+    const { createTime } = dealLogList[index];
+
+    // 清空派送超过30天的记录
+    if (_30DayBefore > new Date(createTime.replace(/\-/g, '/')).getTime()) {
+      $.setData(
+        JSON.stringify($.carriageIdArr.filter((item) => item !== carriageId)),
+        $.CARRIAGE_ID_ARR_KEY
+      );
+
+      return resolve();
+    }
 
     if (k > 0) {
       $.logText += `------------------------------------\n`;
@@ -228,53 +207,41 @@ function showMsg(userInfo, wuLiuDetail, k) {
 
     $.name = `京东物流 账号：${userInfo.baseInfo.nickname}`;
     $.subt = ``;
-    $.desc = `📦${carriersName.replace(/包裹|大件/, '')}：${waybillCode}`;
-    $.phone =
-      $.needPhone === 'Y'
-        ? `\n📱手机尾号：${$.phoneList[userInfo.baseInfo.curPin] || '无'}`
-        : '';
-
-    // $.info = `📘包含商品：${shopName}\n📗商品数目：${sum}\n📕订单编号：${orderId}`;
-    $.info = `📘包含商品：${shopName}\n📗商品数目：${sum}`;
-    $.yg = deliveryPromiseTime ? `⏳预估送达：${deliveryPromiseTime}\n` : '';
-    $.wl = `🚚最新物流：${orderNode}`;
-    $.imgPath = imgPath;
+    $.desc = `📦${carrier.replace(
+      /包裹|大件/,
+      ''
+    )}：${carriageId}\n📱手机尾号：${recvMobile.slice(-4)}`;
+    $.info = `📘包含商品：${orderWareList[0].itemName}\n📗商品数目：${orderWareList.length}\n📕订单编号：${orderId}`;
+    $.wl = `🚚最新物流：${dealLog}`;
+    $.imgPath = `https://img30.360buyimg.com/jdwlcms/${orderWareList[0].itemImgPath}`;
     $.state = `🚥当前状态：${
-      waybillNewStatus === '0008'
-        ? '🟢'
-        : waybillNewStatus === '0006'
-        ? '🟡'
-        : '🔴'
-    }${waybillNewStatusName}\n`;
+      wuLiuStateCode === '0008'
+        ? '🟢签收'
+        : wuLiuStateCode === '0006'
+        ? '🟡派送'
+        : '🔴运输'
+    }\n`;
 
     $.logText +=
-      $.subt +
-      '\n' +
-      $.desc +
-      '\n' +
-      $.info +
-      '\n' +
-      $.yg +
-      $.wl +
-      '\n' +
-      $.state;
+      $.subt + '\n' + $.desc + '\n' + $.info + '\n' + $.wl + '\n' + $.state;
     // 已通知过的快递，跳过通知
-    if ($.waybillCodeArr.includes(waybillCode)) {
+    if ($.carriageIdArr.includes(carriageId)) {
       return resolve();
     }
 
-    if (waybillNewStatus !== '0006' && waybillNewStatus !== '0008') {
+    if (wuLiuStateCode !== '0006' && wuLiuStateCode !== '0008') {
       return resolve();
     }
 
     // 缓存 0008 状态，只通知一次
-    if (waybillNewStatus === '0008') {
-      $.waybillCodeArr.push(waybillCode);
+    if (wuLiuStateCode === '0008') {
+      $.carriageIdArr.push(carriageId);
 
-      $.setData(JSON.stringify($.waybillCodeArr), $.WAYBILL_CODE_ARR_KEY);
+      $.setData(JSON.stringify($.carriageIdArr), $.CARRIAGE_ID_ARR_KEY);
     }
 
     $.msg($.name, $.subt, $.desc + '\n' + $.wl, {
+      openUrl: `openjd://virtual?params=%7B%20%22category%22:%20%22jump%22,%20%22des%22:%20%22m%22,%20%22url%22:%20%22https://wqs.jd.com/order/n_detail_v2.shtml?deal_id=${orderId}%22%7D`,
       mediaUrl: $.imgPath,
     });
 

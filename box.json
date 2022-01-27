@@ -8,7 +8,12 @@
     {
       "id": "jdWulLiu",
       "name": "京东物流",
-      "keys": ["id77_jdWuLiu_userNum", "id77_jdWuLiu_pageMax"],
+      "keys": [
+        "id77_jdWuLiu_userNum",
+        "id77_jdWuLiu_pageMax",
+        "id77_jdWuLiu_needPhone",
+        "id77_jdWuLiu_phoneList"
+      ],
       "descs_html": [
         "<p>查询的账号数量，不要大于 cookie 数量；默认值是 cookie 数量。</p>",
         "<p>查询条目只能设置「整十」的数字。</p>",
@@ -30,6 +35,26 @@
           "type": "number",
           "placeholder": "10",
           "desc": "整十数字。比如：10，20，30..."
+        },
+        {
+          "id": "id77_jdWuLiu_needPhone",
+          "name": "手机号码",
+          "val": "N",
+          "type": "radios",
+          "desc": "是否显示手机号",
+          "items": [
+            { "key": "Y", "label": "是" },
+            { "key": "N", "label": "否" }
+          ]
+        },
+        {
+          "id": "id77_jdWuLiu_phoneList",
+          "name": "用户手机号",
+          "val": "{\"pin1\": 10086}",
+          "type": "textarea",
+          "autoGrow": true,
+          "rows": 2,
+          "desc": "不懂不建议修改,  JSON格式，如：{\"pin\":\"手机号\"}"
         }
       ],
       "script": "https://raw.githubusercontent.com/id77/QuantumultX/master/task/jdWuLiu.js",
