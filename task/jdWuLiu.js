@@ -85,27 +85,27 @@ const opts = {
       $.page = p;
 
       orderList = [...orderList, ...(await getShopMallOrderCourierForList())];
+    }
 
-      for (let w = 0; w < orderList.length; w++) {
-        const wuLiuDetail = orderList[w];
-        const { waybillNewStatusName, orderState } = wuLiuDetail;
+    for (let w = 0; w < orderList.length; w++) {
+      const wuLiuDetail = orderList[w];
+      const { waybillNewStatusName, orderState } = wuLiuDetail;
 
-        $.logText = '';
-        if (w === 0) {
-          $.logText = '====================================\n';
-          $.logText += `🙆🏻‍♂️账号：${userInfo.baseInfo.nickname}\n`;
-        }
+      $.logText = '';
+      if (w === 0) {
+        $.logText = '====================================\n';
+        $.logText += `🙆🏻‍♂️账号：${userInfo.baseInfo.nickname}\n`;
+      }
 
-        // 忽略取消订单以及非实物订单
-        if (
-          // orderState !== 75 &&
-          // orderState !== 37 &&
-          !blockWaybillNewStatusName.includes(waybillNewStatusName)
-        ) {
-          await showMsg(userInfo, wuLiuDetail, w);
-          console.log($.logText);
-          await $.wait(777);
-        }
+      // 忽略取消订单以及非实物订单
+      if (
+        // orderState !== 75 &&
+        // orderState !== 37 &&
+        !blockWaybillNewStatusName.includes(waybillNewStatusName)
+      ) {
+        await showMsg(userInfo, wuLiuDetail, w);
+        console.log($.logText);
+        await $.wait(777);
       }
     }
   }
