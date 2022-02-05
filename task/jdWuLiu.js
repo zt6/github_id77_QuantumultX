@@ -237,7 +237,7 @@ function showMsg(userInfo, wuLiuDetail, k) {
     // $.info = `📘包含商品：${shopName}\n📗商品数目：${sum}\n📕订单编号：${orderId}`;
     $.info = `📘包含商品：${shopName}\n📗商品数目：${sum}`;
     $.yg = deliveryPromiseTime ? `⏳预估送达：${deliveryPromiseTime}\n` : '';
-    $.wl = `🚚最新物流：${orderNode}`;
+    $.wl = `🚚最新物流：${orderNode || '无'}`;
     $.imgPath = imgPath;
     $.state = `🚥当前状态：${
       waybillNewStatus === '0008'
@@ -245,7 +245,7 @@ function showMsg(userInfo, wuLiuDetail, k) {
         : waybillNewStatus === '0006'
         ? '🟡'
         : '🔴'
-    }${waybillNewStatusName}\n`;
+    }${waybillNewStatusName || '无'}\n`;
 
     $.logText +=
       $.subt +
