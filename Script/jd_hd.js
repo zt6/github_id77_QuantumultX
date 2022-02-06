@@ -136,6 +136,7 @@ try {
       margin-left: 2em;
     }
     .cks li {
+      list-style-type: decimal-leading-zero !important;
       margin-bottom: 0.7143em;
       border: 0.0714em solid #ccc;
       padding: 0.3571em;
