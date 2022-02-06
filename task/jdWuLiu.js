@@ -86,6 +86,13 @@ const opts = {
 
       orderList = [...orderList, ...(await getShopMallOrderCourierForList())];
     }
+    
+    // 忽略已取消订单,已退款等
+    orderList = orderList.filter(wuLiuDetail => {
+      const { waybillNewStatusName, orderState } = wuLiuDetail;       
+              
+      return !blockWaybillNewStatusName.includes(waybillNewStatusName)
+    });
 
     for (let w = 0; w < orderList.length; w++) {
       const wuLiuDetail = orderList[w];
@@ -97,16 +104,8 @@ const opts = {
         $.logText += `🙆🏻‍♂️账号：${userInfo.baseInfo.nickname}\n`;
       }
 
-      // 忽略取消订单以及非实物订单
-      if (
-        // orderState !== 75 &&
-        // orderState !== 37 &&
-        !blockWaybillNewStatusName.includes(waybillNewStatusName)
-      ) {
-        await showMsg(userInfo, wuLiuDetail, w);
-        console.log($.logText);
-        await $.wait(777);
-      }
+      await showMsg(userInfo, wuLiuDetail, w);
+      console.log($.logText);
     }
   }
 })()
