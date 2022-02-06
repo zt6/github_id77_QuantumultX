@@ -132,6 +132,8 @@ try {
     }
     .cks {
       padding: 1.1429em;
+      list-style-type: decimal-leading-zero;
+      margin-left: 2em;
     }
     .cks li {
       margin-bottom: 0.7143em;
