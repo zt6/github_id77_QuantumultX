@@ -132,7 +132,7 @@ try {
     }
     .cks {
       padding: 1.1429em;
-      list-style-type: decimal-leading-zero;
+      list-style-type: decimal-leading-zero !important;
       margin-left: 2em;
     }
     .cks li {
