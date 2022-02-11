@@ -1,25 +1,21 @@
 /*
+ * 备份自用
  *
- *
-脚本功能：拦截100解锁超级会员
-软件版本：2.1.3
+脚本功能：拦截100解锁永久会员
+软件版本：3.0.2
 下载地址：http://t.cn/A6MLFAJf
 脚本作者：Hausd0rff
-更新时间：2022-01-05
+特别鸣谢：感谢@凉意大佬提供的数据
+更新时间：2022-02-08
 电报频道：https://t.me/yqc_123
-问题反馈：https://t.me/yqc_007
+问题反馈：https://t.me/yqc_777
 使用声明：⚠️此脚本仅供学习与交流，
         请勿转载与贩卖！⚠️⚠️⚠️
-
 *******************************
-
 [rewrite_local]
-
-# > 拦截100解锁超级会员
-^https?:\/\/tagit\.hyhuo\.com\/cypt\/block100\/get_vip_info$ url script-response-body https://raw.githubusercontent.com/yqc007/QuantumultX/master/Block100SVIPCrack.js
-
+# > 拦截100解锁永久超级会员
+^https?:\/\/tagit\.hyhuo\.com\/cypt\/block100\/get_vip_info$ url script-response-body https://raw.githubusercontent.com/yqc007/QuantumultX/master/Block100FVIPCrack.js
 [mitm] 
-
 hostname = tagit.hyhuo.com
 *
 *
@@ -28,6 +24,6 @@ hostname = tagit.hyhuo.com
 
 var body = $response.body;
     
-    body = "lvCQG8cCxqficLk+LttK+L2YRSLM39a3jj+Mfoba4wNaV8x54RYUAWrJvcwwFZemFEWG5xK2FlI8k2hlHsSW7uaAeW45GPxSPt1uvVwPI5zLiMJuHvGycPsqS+ozuIELUsmxd901h+fpVaDUSy+5KRrW+M+mVJRARweO6FjfHosZ/pP8kkty3hz0uDRWb9enH9pG+36Issw9aJCxSkok0Q==";
+    body = "lvCQG8cCxqficLk+LttK+OvjY+kGEoGHRWop15GMRVg1TU8oQTFHsNCJIEJMEYYfDjqpfM0sxeXRILHsoullvHqzmN6X7HmMRHqOjr3G0AXp2FtlU91l2+2ZbtUpL8p2cc6Y6JdCOUiADpqc4GZktNpGoED1rMVltIjdbhLGVgO0tYaNtQ/dV52tpmn+Lcm+/3pCU8/wXdnCfkkMB0QZc6psJavFUF6dLfDRzagLuxiwgOQmNQraUG99e4YLDmoQ";
 
 $done({ body });
