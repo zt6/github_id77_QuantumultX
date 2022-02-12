@@ -310,6 +310,10 @@ try {
       _changeBtns();
     }
     
+    document.addEventListener('dblclick', function (e) {
+      _changeMitmUI();
+    });
+    
     function __init () {
       
       window.__vConsole = new VConsole();
@@ -338,10 +342,6 @@ try {
             __vConsole.hide();
             _changeBtns();
           },
-        });
-
-        document.addEventListener('dblclick', function (e) {
-          _changeMitmUI();
         });
 
         const cksDom = document.querySelector('#cks');
