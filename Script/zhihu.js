@@ -29,6 +29,7 @@ html =
   `
 <style ${nonce}>
 div {
+  -webkit-line-clamp: 999 !important;
   -webkit-line-clamp: none !important;
 }
 .OpenInAppButton.is-shown {
