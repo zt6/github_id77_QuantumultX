@@ -19,6 +19,15 @@ https?://.*\.moxigame\.cn url script-response-body https://raw.githubusercontent
 hostname = -lite-msg.m.jd.com, -jdcs.m.jd.com, -ddms.jd.com, -redpoint-msg.m.jd.com, -msjdpay.jd.com, -payfinish.jd.com, -payfinish.m.jd.com, *.jd.com, *.*.jd.com, *.moxigame.cn
 */
 const $ = new Env('京东助手', { noLog: true });
+$.domain = $request.url.match(/https?:\/\/([^\/]+)/)[1];
+$.domainWhitelist = ['jd.com', 'jingxi.com'];
+$.isNeedCKDomain = false;
+
+$.domainWhitelist.forEach((item) => {
+  if ($.domain.includes(item)) {
+    $.isNeedCKDomain = true;
+  }
+});
 
 let html = $response.body;
 
@@ -34,7 +43,10 @@ try {
   const extraCookies = JSON.parse($.getData('CookiesJD') || '[]').map(
     (item) => item.cookie
   );
-  cookies = Array.from(new Set([...cookies, ...extraCookies]));
+
+  if ($.isNeedCKDomain) {
+    cookies = Array.from(new Set([...cookies, ...extraCookies]));
+  }
 
   let url = $request.url.replace(/&un_area=[\d_]+/g, '');
   let sku;
@@ -51,8 +63,8 @@ try {
 
   let cookieListDom = `<ul class="cks">`;
 
-  const isJD = url.includes('jd.com') || url.includes('jingxi.com');
-  if (isJD) {
+  // const isJD = url.includes('jd.com') || url.includes('jingxi.com');
+  if (cookies.length > 0) {
     for (let index = 0; index < cookies.length; index++) {
       const cookie = cookies[index];
       const pin = decodeURI(cookie.match(/pt_pin=(.+?);/)[1]);
@@ -63,18 +75,21 @@ try {
   }
   cookieListDom += `</ul>`;
 
-  let tools =
-    `
+  let tools = ``;
+  if (cookies.length > 0) {
+    tools =
+      `
     <div id="_btns">
       <div id="cks" class="_btn hide"></div>
       <div id="nextCookie" class="_btn hide"></div>
       <div id="Foxok" class="_btn hide" onclick="window.location.href='Foxok://url?${url}'">
         <img src="data:image/jpg;base64,_9j_4AAQSkZJRgABAQAAAQABAAD_2wBDAAMCAgMCAgMDAgMDAwMDBAcFBAQEBAkGBwUHCgkLCwoJCgoMDREODAwQDAoKDhQPEBESExMTCw4UFhQSFhESExL_2wBDAQMDAwQEBAgFBQgSDAoMEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhL_wgARCAAgACADAREAAhEBAxEB_8QAGQABAQADAQAAAAAAAAAAAAAABwYCBAUJ_8QAGwEBAAIDAQEAAAAAAAAAAAAABgUHAAMEAQL_2gAMAwEAAhADEAAAAPUrX9CwB93Mj1CwCEEWRBNeWLryGNioLny-j1ftatBA0s5wrj8SXil1VvhaZbFf_8QAKxAAAgEDAgUDAwUAAAAAAAAAAQIDBAURAAYHEhMhQQgUMRWBkRYjU3Fy_9oACAEBAAE_AKmpiooJJ6p1hhhUu7scBQPJ1evU5bI62Sn2rb5rtGhx7pn6UT_5-Sf7xjW1uOVPeZUivNvkoOfsJUfqJ9_I1DMs8QeFlZGAKsDkEa4q7jpbZDRWy7wJPa7v1Irgr_wkcpP5YHVbw_k2LKKOjt1FuC41DFqf3dQUgSDJEZ5R3lkfGcdgNbM4xWutqb9ZazaNsg3Ft2n91NCHeNHiEnJKMdyrISp8ghhrgnxHO9o7lRPbYbYbWUMccMzSKyNnywGO4OuOFjlrrNT10CFxQsRKAM4RvOqXcdO89qku9xFBWWX9tJanPSnhByoLjPJIh-Ccgj8iu2Lt_btmvFx25a7RBdt5AT19ZR0vJJOhYuWdj3JZiTr09bSls9DdbpVIU-oyqkAPmNM9_uSdSwR1MTxzqrxuMMpGQRq6-n-y118grIJ5oKRJhJNREBkkAOeUZ7ga_Q8VXWvPdZuurHtEowoHwBqKFKeJY4UCIigKq9gANf_EACMRAAIBBAICAgMAAAAAAAAAAAIDAQAEERIFBjFhEyEyQVH_2gAIAQIBAT8AacKDaZ-orku_ISz40Dt7rje-JeWrR190toNiJCcxXY-TVbmtDPxPOafxVrZOwQ7kfj1TEWltbkw7fJD7rqPNjerJYL11913mwY1AvH71pN4NzKxNmph4nHmuw35ospURbGddB41iLcmsjG1MWDQmJjMTTek203cOCcR_KLqKHXcveW0_qKUqFBgY8V__xAAjEQABAwMEAwEBAAAAAAAAAAACAAEDBAUSBhEhMRMiQUJh_9oACAEDAQE_AAjczYBbdUOgqmSLyTlhv8Vw0jLTs_jLJOOD4krDQyTZzRv7Bs7KC9lc-ZJPGA98fVddPzxvEYVWUcnT7MtU2B7Y4k55MS0lWRRVJRSPwSqLcYNJ4AyA-_4rfWzz1QRyl6x9LWlzaolCFvygNwLce2VPrGsjpShfl3-oboYhsHDoycn3J-V__9k" />
       </div>` +
-    (!sku
-      ? ``
-      : `<button id="smzdm" class="_btn hide"></button><button id="manmanbuy" class="_btn hide"></button>`) +
-    `</div>`;
+      (!sku
+        ? ``
+        : `<button id="smzdm" class="_btn hide"></button><button id="manmanbuy" class="_btn hide"></button>`) +
+      `</div>`;
+  }
 
   html = html.replace(
     /(<body.*?>)/,
@@ -153,14 +168,14 @@ try {
   <script>
 
     const _currentPin = Cookies.get('pt_pin');
-    const needHideSwitch = localStorage.getItem('vConsole_switch_hide') === 'Y';
+    const _needHideSwitch = localStorage.getItem('vConsole_switch_hide') === 'Y';
 
-    const cookies = ${JSON.stringify(cookies)};
+    const _cookies = ${JSON.stringify(cookies)};
 
     // ck同步最新
     if(_currentPin) {
       // console.log('_currentPin', encodeURI(_currentPin));
-      for (const ck of cookies) {
+      for (const ck of _cookies) {
         const _pin = ck.match(/pt_pin=(.+?);/)[1];
         // console.log('_pin', _pin);
         
@@ -235,7 +250,7 @@ try {
 
       const index = [].indexOf.call(cookieDomList, cookieDom);
 
-      _changeCookie(cookies[index + 1]);
+      _changeCookie(_cookies[index + 1]);
     }
 
     const _btnIDs = [
@@ -307,7 +322,8 @@ try {
         localStorage.setItem('vConsole_switch_hide', 'Y')
       }
 
-      _changeBtns();
+
+      if (_cookies.length > 0) _changeBtns();
     }
     
     document.addEventListener('dblclick', function (e) {
@@ -317,7 +333,7 @@ try {
     function __init () {
       
       window.__vConsole = new VConsole();
-      if (needHideSwitch) {
+      if (_needHideSwitch) {
         __vConsole.hideSwitch(); 
       }
 
@@ -351,7 +367,7 @@ try {
           e.stopPropagation();
         })
         cksDom.addEventListener('dblclick', function (e) {
-          _changeCookie(cookies[0]);
+          _changeCookie(_cookies[0]);
           e.stopPropagation();
         });
 
@@ -366,7 +382,7 @@ try {
       
       JDCKPlugin.on('ready', function() {
 
-        if (!needHideSwitch) {
+        if (!_needHideSwitch) {
           const $btns = __vConsole.$.all('._btn');
           __vConsole.$.removeClass($btns, 'hide');
         }
@@ -409,7 +425,7 @@ try {
       JDCKPlugin.on('showConsole', scrollTopToCKDom);
 
       
-      if (${isJD}) {
+      if (_cookies.length > 0) {
         __vConsole.addPlugin(JDCKPlugin);
       }
 
