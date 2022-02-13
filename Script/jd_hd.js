@@ -31,7 +31,7 @@ $.domainWhitelist.forEach((item) => {
 
 let html = $response.body;
 
-if (!html.includes('<head>')) {
+if (!html.includes('</head>')) {
   $.done();
 }
 
