@@ -366,7 +366,7 @@ try {
               Array.prototype.forEach.call($jdlifeCouponDoms, function(el, i){
                   const $dom = el.querySelector('div[data-roleid]')
                   if ($dom)
-                    $dom.insertAdjacentElement('afterend', createDom('https://coupon.m.jd.com/coupons/show.action?key='+ $dom.getAttribute("data-encryptedkey") + '&roleId=' + $dom.getAttribute("data-roleid")));
+                    el.insertAdjacentElement('afterend', createDom('https://coupon.m.jd.com/coupons/show.action?key='+ $dom.getAttribute("data-encryptedkey") + '&roleId=' + $dom.getAttribute("data-roleid")));
               });
               __showCouponLink = true;
             }
@@ -521,6 +521,7 @@ try {
           let newDiv = document.createElement("div");
           let newContent = document.createTextNode(str);
           newDiv.appendChild(newContent);
+          newDiv.style.fontSize = "16px";
           newDiv.addEventListener('click', (e) => {
              __copyText(str)
           })
