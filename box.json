@@ -106,6 +106,17 @@
           "type": "text"
         },
         {
+          "id": "id77_JDLM_copy",
+          "name": "复制内容(需DIY Api)",
+          "val": "link",
+          "type": "radios",
+          "desc": "点击QX通知复制文案",
+          "items": [
+            { "key": "link", "label": "转链链接" },
+            { "key": "diy", "label": "DIY Api 文案" }
+          ]
+        },
+        {
           "id": "id77_JDLM_NO_LOG",
           "name": "是否禁止输出日志",
           "val": "Y",
