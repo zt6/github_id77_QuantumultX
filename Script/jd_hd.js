@@ -275,7 +275,7 @@ try {
     }
 
     const _script = document.createElement('script');
-    _script.src = "https://cdnjs.cloudflare.com/ajax/libs/vConsole/3.11.1/vconsole.min.js";
+    _script.src = "https://unpkg.com/vconsole@3.12.0/dist/vconsole.min.js";
     // _script.src = "https://unpkg.com/vconsole@latest/dist/vconsole.min.js";
     // _script.doneState = { loaded: true, complete: true};
     _script.onload = function() {
