@@ -319,7 +319,7 @@ try {
     function _changeTabs() {
       const $tabs = document.querySelectorAll('.vc-tab');
       Array.prototype.forEach.call($tabs, function(el, i){
-        if (i === 0 || i > 4) return;
+        if (i === 0 || i === 2 || i > 3) return;
         if (el.classList.contains('hide')){
           el.classList.remove('hide');
         } else {
@@ -395,6 +395,14 @@ try {
   
         __vConsole.setSwitchPosition(10, 50);
         const JDCKPlugin = new VConsole.VConsolePlugin("jd_cookie", "京东CK");
+
+        JDCKPlugin.on('renderTab', function (callback) {
+          const html = `
+                        ${cookieListDom}
+                      `;
+                      
+          callback(html);
+        });
         
         JDCKPlugin.on("addTool", function (callback) {
          
