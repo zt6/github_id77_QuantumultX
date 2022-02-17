@@ -21,11 +21,11 @@ hostname = -lite-msg.m.jd.com, -jdcs.m.jd.com, -ddms.jd.com, -redpoint-msg.m.jd.
 const $ = new Env('京东助手', { noLog: true });
 $.domain = $request.url.match(/https?:\/\/([^\/]+)/)[1];
 $.domainWhitelist = ['jd.com', 'jingxi.com'];
-$.isNeedCKDomain = false;
+$.isNeedToolsDomain = false;
 
 $.domainWhitelist.forEach((item) => {
   if ($.domain.includes(item)) {
-    $.isNeedCKDomain = true;
+    $.isNeedToolsDomain = true;
   }
 });
 
@@ -44,7 +44,7 @@ try {
     (item) => item.cookie
   );
 
-  if ($.isNeedCKDomain) {
+  if ($.isNeedToolsDomain) {
     cookies = Array.from(new Set([...cookies, ...extraCookies]));
   }
 
@@ -95,6 +95,9 @@ try {
     /(<body.*?>)/,
     `$1
   <style>
+    .vc-tab.hide {
+      display: none !important;
+    }
     * {
       -webkit-user-select: auto !important;
       user-select: auto !important;
@@ -264,16 +267,7 @@ try {
 
         if (_btn) {
           _btn.addEventListener('click',() => {
-            const input = document.createElement('input');
-            input.setAttribute('readonly', 'readonly');
-            input.setAttribute('value', 'https://item.jd.com/${sku}.html?' + Math.random());
-            document.body.appendChild(input);
-            input.setSelectionRange(0, input.value.length);
-            if (document.execCommand('copy')) {
-              document.execCommand('copy');
-              console.log('复制成功');
-            }
-            document.body.removeChild(input);
+            __copyText('https://item.jd.com/${sku}.html?' + Math.random());
             window.location.href= _btnID + '://';
           })
         }
@@ -281,35 +275,57 @@ try {
     }
 
     const _script = document.createElement('script');
-    _script.src = "https://cdnjs.cloudflare.com/ajax/libs/vConsole/3.8.1/vconsole.min.js";
+    _script.src = "https://cdnjs.cloudflare.com/ajax/libs/vConsole/3.11.1/vconsole.min.js";
+    // _script.src = "https://unpkg.com/vconsole@latest/dist/vconsole.min.js";
     // _script.doneState = { loaded: true, complete: true};
     _script.onload = function() {
+      try {
         setTimeout(() => {
           __onReady(__init);
         });
         console.log("初始化成功");
+      } catch (err) {
+        console.log('_script.onload', err);
+      }
     };
     
     document.getElementsByTagName('head')[0].appendChild(_script);
 
     function __onReady(fn){
-      const readyState = document.readyState;
-      if(readyState === 'interactive' || readyState === 'complete') {
-        fn()
-      }else{
-        window.addEventListener("DOMContentLoaded",fn);
+      try {
+        const readyState = document.readyState;
+        if(readyState === 'interactive' || readyState === 'complete') {
+          fn()
+        }else{
+          window.addEventListener("DOMContentLoaded",fn);
+        }
+        
+      } catch (error) {
+        console.error(arguments.callee.name, error);
       }
     }
 
     function _changeBtns() {
-      const $btns = __vConsole.$.all('._btn');
+      const $btns = document.querySelectorAll('._btn');
+      Array.prototype.forEach.call($btns, function(el, i){
+        if (el.classList.contains('hide')){
+          el.classList.remove('hide');
+        } else {
+          el.classList.add('hide');
+        }
+      });
+    }
 
-      if (__vConsole.$.hasClass($btns[0], 'hide')) {
-        // do something
-        __vConsole.$.removeClass($btns, 'hide');
-      } else {
-        __vConsole.$.addClass($btns, 'hide'); 
-      }
+    function _changeTabs() {
+      const $tabs = document.querySelectorAll('.vc-tab');
+      Array.prototype.forEach.call($tabs, function(el, i){
+        if (i === 0 || i > 4) return;
+        if (el.classList.contains('hide')){
+          el.classList.remove('hide');
+        } else {
+          el.classList.add('hide');
+        }
+      });
     }
 
     function _changeMitmUI() {
@@ -331,113 +347,188 @@ try {
     });
     
     function __init () {
-      
-      window.__vConsole = new VConsole();
-      if (_needHideSwitch) {
-        __vConsole.hideSwitch(); 
-      }
+      try {
 
-      __vConsole.setSwitchPosition(10, 50);
-      const JDCKPlugin = new VConsole.VConsolePlugin("jd_cookie", "京东CK");
-
-      JDCKPlugin.on("renderTab", function (callback) {
-        const html = \`
-                      ${cookieListDom}
-                    \`;
-                    
-        callback(html);
-      });
-      
-      JDCKPlugin.on("addTool", function (callback) {
-       
-        const toolList = [];
-        toolList.push({
-          name: "显隐图标",
-          global: false,
-          onClick: function (event) {
-            __vConsole.hide();
-            _changeBtns();
-          },
-        });
-
-        const cksDom = document.querySelector('#cks');
-        cksDom.addEventListener('click', (e) => {
-          __vConsole.show();
-          __vConsole.showTab("jd_cookie");
-          e.stopPropagation();
-        })
-        cksDom.addEventListener('dblclick', function (e) {
-          _changeCookie(_cookies[0]);
-          e.stopPropagation();
-        });
-
-        const nextCookieDom = document.querySelector('#nextCookie');
-        nextCookieDom.addEventListener('click', (e) => {
-          _nextCookie();
-          e.stopPropagation();
-        })
-        
-        callback(toolList);
-      });
-      
-      JDCKPlugin.on('ready', function() {
-
-        if (!_needHideSwitch) {
-          const $btns = __vConsole.$.all('._btn');
-          __vConsole.$.removeClass($btns, 'hide');
+        // 券链接 展示
+        __showCouponLink = false;
+        function showCouponLink() {
+           if (__showCouponLink) return;
+           const $jdCouponDoms = document.querySelectorAll('div[roleid]');
+            if ($jdCouponDoms.length > 0 && window._itemInfo && _itemInfo.avlCoupon.coupons) {
+              Array.prototype.forEach.call($jdCouponDoms, function(el, i){
+                  el.insertAdjacentElement('afterend', createDom('https://coupon.m.jd.com/coupons/show.action?key='+ el.getAttribute("key") + '&roleId=' + el.getAttribute("roleid")));
+              });
+              __showCouponLink = true;
+            }
         }
 
-        const fontSize = document.querySelector('#__vconsole').style.fontSize;
+        showCouponLink();
 
-        if(fontSize) {
-          document.querySelector('#_btns').style.fontSize = fontSize;
-        }
+        document.addEventListener('click', (e) => {
+            showCouponLink();
+        })
 
-        const _currentCKDom = document.querySelector("#_" + _currentPin);
-
-        if (_currentPin && _currentCKDom) {
-          setTimeout(() => {
-            _currentCKDom.style.background = '#238636';
-          });
+        const $fPromoComb = document.querySelector('#fPromoComb');
+        if ($fPromoComb) {
+           $fPromoComb.addEventListener('click', (e) => {
+            const $jxCouponDoms = document.querySelectorAll('.jxcoupon-item');
+            if ($jxCouponDoms.length > 0 && window._ITEM_DATA && _ITEM_DATA.floors) {
+              const couponInfo = _ITEM_DATA.floors.filter(o => o.fId === 'fPromoComb')[0].fData.coupon.couponInfo;
+              Array.prototype.forEach.call($jxCouponDoms, function(el, i){
+                  el.insertAdjacentElement('afterend', createDom('https://coupon.m.jd.com/coupons/show.action?key='+ couponInfo[i].encryptedKey + '&roleId=' + couponInfo[i].roleId));
+              });
+              __showCouponLink = true;
+            }
+          })
         }
         
-      });
-
-      function scrollTopToCKDom() {
-        const fontSize = document.querySelector('#__vconsole').style.fontSize;
-
-        const _currentCKDom = document.querySelector("#_" + _currentPin);
-        const _VCcontext = document.querySelector('.vc-content');
-        let cookieIndex;
-
-        if (_currentCKDom) {
-          cookieIndex = _currentCKDom.dataset.cookieIndex - 1;
-
-          if(_VCcontext && cookieIndex) {
+        window.__vConsole = new VConsole({
+          onReady: () => {
             setTimeout(() => {
-            _VCcontext.scrollTop  = cookieIndex * (fontSize || 16) * 2.5;
-            }); 
+              console.info(window.location.href);
+            },3000);
+          }
+        });
+        if (_needHideSwitch) {
+          __vConsole.hideSwitch(); 
+        }
+  
+        __vConsole.setSwitchPosition(10, 50);
+        const JDCKPlugin = new VConsole.VConsolePlugin("jd_cookie", "京东CK");
+        
+        JDCKPlugin.on("addTool", function (callback) {
+         
+          const toolList = [];
+          toolList.push({
+            name: "显隐图标",
+            global: false,
+            onClick: function (event) {
+              __vConsole.hide();
+              _changeBtns();
+            },
+          });
+  
+          toolList.push({
+            name: "其他工具",
+            global: true,
+            onClick: function (event) {
+              _changeTabs();
+            },
+          });
+  
+          const cksDom = document.querySelector('#cks');
+          cksDom.addEventListener('click', (e) => {
+            __vConsole.show();
+            __vConsole.showPlugin("jd_cookie");
+            e.stopPropagation();
+          })
+          cksDom.addEventListener('dblclick', function (e) {
+            _changeCookie(_cookies[0]);
+            e.stopPropagation();
+          });
+  
+          const nextCookieDom = document.querySelector('#nextCookie');
+          nextCookieDom.addEventListener('click', (e) => {
+            _nextCookie();
+            e.stopPropagation();
+          })
+          
+          callback(toolList);
+        });
+        
+        JDCKPlugin.on('ready', function() {
+  
+          if (!_needHideSwitch) {
+            const $btns = document.querySelectorAll('._btn');
+            Array.prototype.forEach.call($btns, function(el, i){
+              el.classList.remove('hide');
+            });
+          }
+  
+          const fontSize = document.querySelector('#__vconsole').style.fontSize;
+  
+          if(fontSize) {
+            document.querySelector('#_btns').style.fontSize = fontSize;
+          }
+  
+          const _currentCKDom = document.querySelector("#_" + _currentPin);
+  
+          if (_currentPin && _currentCKDom) {
+            setTimeout(() => {
+              _currentCKDom.style.background = '#238636';
+            });
+          }
+          
+        });
+  
+        function scrollTopToCKDom(reset) {
+          const fontSize = document.querySelector('#__vconsole').style.fontSize;
+  
+          const _currentCKDom = document.querySelector("#_" + _currentPin);
+          const _VCcontext = document.querySelector('.vc-content');
+  
+          if (reset) {
+            _VCcontext.scrollTop = 0;
+            return;
+          }
+  
+          let cookieIndex;
+  
+          if (_currentCKDom) {
+            cookieIndex = _currentCKDom.dataset.cookieIndex - 1;
+  
+            if(_VCcontext && cookieIndex) {
+              setTimeout(() => {
+                _VCcontext.scrollTop  = cookieIndex * (fontSize || 16) * 2.5;
+              }); 
+            }
           }
         }
+  
+        JDCKPlugin.on('show', scrollTopToCKDom);
+        JDCKPlugin.on('showConsole', scrollTopToCKDom);
+        JDCKPlugin.on('hideConsole', () => scrollTopToCKDom(true));
+  
+        if (${$.isNeedToolsDomain}) {
+          if (_cookies.length > 0) {
+            __vConsole.addPlugin(JDCKPlugin);
+            __vConsole.showPlugin("jd_cookie");
+            _changeTabs();
+          }
+        }
+  
+        __vConsole.showPlugin("default");
+  
+        function createDom(str) {
+          let newDiv = document.createElement("div");
+          let newContent = document.createTextNode(str);
+          newDiv.appendChild(newContent);
+          newDiv.addEventListener('click', (e) => {
+             __copyText(str)
+          })
+          return newDiv;
+        }
+      } catch (err) {
+        console.log(arguments.callee.name, err);
       }
+    }
 
-      JDCKPlugin.on('show', scrollTopToCKDom);
-      JDCKPlugin.on('showConsole', scrollTopToCKDom);
-
-      
-      if (_cookies.length > 0) {
-        __vConsole.addPlugin(JDCKPlugin);
+    function __copyText(text) {
+      const input = document.createElement('input');
+      input.setAttribute('readonly', 'readonly');
+      input.setAttribute('value', text);
+      document.body.appendChild(input);
+      input.setSelectionRange(0, input.value.length);
+      if (document.execCommand('copy')) {
+        document.execCommand('copy');
+        console.log('复制成功');
       }
-
-      setTimeout(() => {
-        console.info(window.location.href);
-      },3000);
-      
+      document.body.removeChild(input);
     }
   </script>`
   );
 } catch (error) {
-  console.log(error);
+  console.error(arguments.callee.name, error);
 }
 
 $.done({
