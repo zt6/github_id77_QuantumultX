@@ -75,6 +75,9 @@ if ($.getData('id77_JDSkuId_Cache') === sku) {
   $.done();
 } else {
   $.setData(sku, 'id77_JDSkuId_Cache');
+  $.setData('', 'id77_JDSubt_Cache');
+  $.setData('', 'id77_JDDesc_Cache');
+  $.setData(JSON.stringify({}), 'id77_JDMsgOpts_Cache');
 }
 
 // const openUrl = `https://union.jd.com/proManager/index?pageNo=1&keywords=${sku}`;
