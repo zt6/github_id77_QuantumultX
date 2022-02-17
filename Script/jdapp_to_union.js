@@ -197,7 +197,7 @@ function setReqOpts(method, _360buy_param_json) {
 
       $.subt = '';
       $.desc = diyData.briefInfo;
-      $.copyText = diy.details;
+      $.copyText = diyData.details;
       setScheme(
         diyData.shortUrl || diyData.promotionUrl || diyData.originalContext
       );
