@@ -360,6 +360,16 @@ try {
               });
               __showCouponLink = true;
             }
+
+            const $jdlifeCouponDoms = document.querySelectorAll('.prodFavorableInfo-wrap-couponitem');
+            if ($jdlifeCouponDoms.length > 0 && window._itemInfo && _itemInfo.avlCoupon.coupons) {
+              Array.prototype.forEach.call($jdlifeCouponDoms, function(el, i){
+                  const $dom = el.querySelectorAll('div[data-roleid]')
+                  if ($dom)
+                    $dom.insertAdjacentElement('afterend', createDom('https://coupon.m.jd.com/coupons/show.action?key='+ $dom.getAttribute("data-encryptedkey") + '&roleId=' + $dom.getAttribute("data-roleid")));
+              });
+              __showCouponLink = true;
+            }
         }
 
         showCouponLink();
