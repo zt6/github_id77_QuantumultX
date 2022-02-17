@@ -16,7 +16,7 @@ const siteId = $.getData('id77_JDLM_siteId'); // 网站或APP的ID
 const app_key = $.getData('id77_JDLM_app_key'); // 网站或APP的 app_key
 const appSecret = $.getData('id77_JDLM_appSecret'); // 网站或APP的 appSecret
 const diyApi = $.getData('id77_JDLM_diy_api'); // 自建服务
-const diyCopy = $.getData('id77_JDLM_copy') || 'link'; // copy  文案
+const diyCopy = $.getData('id77_JDLM_copy'); // copy  文案
 
 $.log(`🔗捕获：\n${$request.url}`);
 const url = $request.url.replace(/https?:\/\//g, '');
@@ -206,7 +206,11 @@ function setReqOpts(method, _360buy_param_json) {
         openUrl: $.openUrl,
         mediaUrl: `https://img20.360buyimg.com/devfe/${diyData.imageUrl}`,
         'update-pasteboard':
-          diyData.shortUrl || diyData.promotionUrl || diyData.originalContext,
+          diyCopy === 'diy'
+            ? $.copyText
+            : diyData.shortUrl ||
+              diyData.promotionUrl ||
+              diyData.originalContext,
       };
       $.setData($.subt, 'id77_JDSubt_Cache');
       $.setData($.desc, 'id77_JDDesc_Cache');
@@ -393,10 +397,10 @@ function setReqOpts(method, _360buy_param_json) {
       openUrl: $.openUrl,
       mediaUrl,
       'update-pasteboard':
-        diyCopy === 'link'
-          ? $.convertedLink ||
-            `https://item.jd.com/${skuId}.html?${Math.random()}`
-          : $.copyText,
+        diyCopy === 'diy'
+          ? $.copyText
+          : $.convertedLink ||
+            `https://item.jd.com/${skuId}.html?${Math.random()}`,
     };
     $.setData($.subt, 'id77_JDSubt_Cache');
     $.setData($.desc, 'id77_JDDesc_Cache');
