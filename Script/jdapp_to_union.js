@@ -39,32 +39,29 @@ sku = arr[1];
 
 $.log(`👾SKU：${sku}`);
 
-if ($.getData('id77_JDSkuId_Cache') === sku) {
-  const msgOpts = JSON.parse($.getData('id77_JDMsgOpts_Cache'));
+const msgOpts = JSON.parse($.getData('id77_JDMsgOpts_Cache')) || {};
+if ($.getData('id77_JDSkuId_Cache') === sku && msgOpts.openUrl) {
+  let appSchemeName = '';
 
-  if (msgOpts.openUrl) {
-    let appSchemeName = '';
+  switch (appType) {
+    case 'jdapp':
+      appSchemeName = 'openjd';
+      break;
+    case 'jdltapp':
+      appSchemeName = 'openjdlite';
+      break;
+    case 'jdpingou':
+      appSchemeName = 'openapp.jdpingou';
+      break;
 
-    switch (appType) {
-      case 'jdapp':
-        appSchemeName = 'openjd';
-        break;
-      case 'jdltapp':
-        appSchemeName = 'openjdlite';
-        break;
-      case 'jdpingou':
-        appSchemeName = 'openapp.jdpingou';
-        break;
-
-      default:
-        break;
-    }
-
-    msgOpts.openUrl = msgOpts.openUrl.replace(
-      /^[a-z\.]+(:\/\/.*)/,
-      `${appSchemeName}$1`
-    );
+    default:
+      break;
   }
+
+  msgOpts.openUrl = msgOpts.openUrl.replace(
+    /^[a-z\.]+(:\/\/.*)/,
+    `${appSchemeName}$1`
+  );
 
   $.msg(
     $.name,
