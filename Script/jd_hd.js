@@ -397,10 +397,10 @@ try {
         const JDCKPlugin = new VConsole.VConsolePlugin("jd_cookie", "京东CK");
 
         JDCKPlugin.on('renderTab', function (callback) {
-          const html = `
+          const html = \`
                         ${cookieListDom}
-                      `;
-                      
+                      \`;
+
           callback(html);
         });
         
