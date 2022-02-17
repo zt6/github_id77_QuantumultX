@@ -202,6 +202,8 @@ function setReqOpts(method, _360buy_param_json) {
         diyData.shortUrl || diyData.promotionUrl || diyData.originalContext
       );
 
+      $.log(`🔗scheme：\n${$.openUrl}`);
+
       $.msgOpts = {
         openUrl: $.openUrl,
         mediaUrl: `https://img20.360buyimg.com/devfe/${diyData.imageUrl}`,
