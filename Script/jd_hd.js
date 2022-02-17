@@ -354,7 +354,7 @@ try {
         function showCouponLink() {
            if (__showCouponLink) return;
            const $jdCouponDoms = document.querySelectorAll('div[roleid]');
-            if ($jdCouponDoms.length > 0 && window._itemInfo && _itemInfo.avlCoupon.coupons) {
+            if ($jdCouponDoms.length > 0) {
               Array.prototype.forEach.call($jdCouponDoms, function(el, i){
                   el.insertAdjacentElement('afterend', createDom('https://coupon.m.jd.com/coupons/show.action?key='+ el.getAttribute("key") + '&roleId=' + el.getAttribute("roleid")));
               });
@@ -362,9 +362,9 @@ try {
             }
 
             const $jdlifeCouponDoms = document.querySelectorAll('.prodFavorableInfo-wrap-couponitem');
-            if ($jdlifeCouponDoms.length > 0 && window._itemInfo && _itemInfo.avlCoupon.coupons) {
+            if ($jdlifeCouponDoms.length > 0) {
               Array.prototype.forEach.call($jdlifeCouponDoms, function(el, i){
-                  const $dom = el.querySelectorAll('div[data-roleid]')
+                  const $dom = el.querySelector('div[data-roleid]')
                   if ($dom)
                     $dom.insertAdjacentElement('afterend', createDom('https://coupon.m.jd.com/coupons/show.action?key='+ $dom.getAttribute("data-encryptedkey") + '&roleId=' + $dom.getAttribute("data-roleid")));
               });
