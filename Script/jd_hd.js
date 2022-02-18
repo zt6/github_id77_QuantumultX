@@ -8,7 +8,7 @@ https://jdqd.jd.com/poststring url reject
 
 # web切换jd cookie
 
-^https?:\/\/.{0,27}\.?jd\.com\/?((?!\.(js|json|jpg|gif|png|webp|dpg|flv|mp3|mp4)).)*$ url script-response-body https://raw.githubusercontent.com/id77/QuantumultX/master/Script/jd_hd.js
+^https?:\/\/.{0,27}\.?jd\.(com|hk)\/?((?!\.(js|json|jpg|gif|png|webp|dpg|flv|mp3|mp4)).)*$ url script-response-body https://raw.githubusercontent.com/id77/QuantumultX/master/Script/jd_hd.js
 ^https?:\/\/.*\.jingxi\.com\/?((?!\.(js|json|jpg|gif|png|flv|mp3|mp4)).)*$ url script-response-body https://raw.githubusercontent.com/id77/QuantumultX/master/Script/jd_hd.js
 
 # 京东活动
@@ -20,7 +20,7 @@ hostname = -lite-msg.m.jd.com, -jdcs.m.jd.com, -ddms.jd.com, -redpoint-msg.m.jd.
 */
 const $ = new Env('京东助手', { noLog: true });
 $.domain = $request.url.match(/https?:\/\/([^\/]+)/)[1];
-$.domainWhitelist = ['jd.com', 'jingxi.com'];
+$.domainWhitelist = ['jd.com', 'jd.hk', 'jingxi.com'];
 $.isNeedToolsDomain = false;
 
 $.domainWhitelist.forEach((item) => {
@@ -227,6 +227,7 @@ try {
 
       const domains = [
         ".jd.com",
+        ".jd.hk",
         ".jingxi.com"
       ];
 
