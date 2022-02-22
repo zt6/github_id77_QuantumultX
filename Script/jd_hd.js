@@ -55,6 +55,9 @@ try {
   if (url.includes('sku=')) {
     arr = url.match(/sku=(\d+)/);
   }
+  if (url.includes('wareId=')) {
+    arr = url.match(/wareId=(\d+)/);
+  }
   if (url.includes('/product/')) {
     arr = url.match(/\/.*\/(\d+)\.html/);
   }
