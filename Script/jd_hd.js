@@ -173,6 +173,44 @@ try {
   <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.1/js.cookie.min.js"></script>
   <script>
 
+    // 兼容保价页面
+    if(!Map.prototype.set){
+      Map.prototype.set = function(_key, _value) { 
+        if (this.containsKey(_key) == true) {  
+            if(this.remove(_key) == true){ 
+              this.elements.push( { 
+                key : _key, 
+                value : _value 
+              }); 
+
+          }else{ 
+            this.elements.push( { 
+              key : _key, 
+              value : _value 
+            }); 
+          } 
+        } else { 
+          this.elements.push( { 
+            key : _key, 
+            value : _value 
+          }); 
+        } 
+      }
+      Map.prototype.has = function(_key) { 
+        var bln = false; 
+        try { 
+          for (i = 0; i < this.elements.length; i++) {  
+            if (this.elements[i].key == _key){ 
+              bln = true; 
+            } 
+          } 
+        }catch(e) { 
+          bln = false;  
+        } 
+        return bln; 
+      }
+    }
+
     const _currentPin = Cookies.get('pt_pin');
     const _needHideSwitch = localStorage.getItem('vConsole_switch_hide') === 'Y';
 
