@@ -1,7 +1,7 @@
 /**
  
 # 屏蔽eid 手机跟踪
-https://*.jd.com url script-request-body https://raw.githubusercontent.com/id77/QuantumultX/master/Script/fuckEid.js
+https://.*.jd.com url script-request-body https://raw.githubusercontent.com/id77/QuantumultX/master/Script/fuckEid.js
 
 **/
 
