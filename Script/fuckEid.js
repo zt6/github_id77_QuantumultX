@@ -1,18 +1,28 @@
-const $ = new Env('移除HttpOnly');
+/**
+ 
+# 屏蔽eid 手机跟踪
+https://*.jd.com url script-request-body https://raw.githubusercontent.com/id77/QuantumultX/master/Script/fuckEid.js
 
-const modifiedHeaders = $response.headers;
-const cookies = $response.headers['Set-Cookie']
-  .replace(/HttpOnly/gi, '')
-  .replace(/(Expires=.+?),/gi, '$1@')
-  .split(', ');
+**/
 
-let key = 'Set-Cookie';
-cookies.forEach((ck, i) => {
-  key += ' ';
-  modifiedHeaders[key] = ck.replace(/@/g, ',');
-});
+const $ = new Env('Fuck Eid');
 
-$.done({ headers: modifiedHeaders });
+let modifiedHeaders = $request.headers;
+let modifiedBody = $request.body;
+// modifiedHeaders['User-Agent'] = modifiedHeaders['User-Agent'].replace(
+//   /"devicefinger":".*"/g,
+//   '"devicefinger":""'
+// );
+modifiedHeaders['Cookie'] = modifiedHeaders['Cookie'].replace(
+  /"devicefinger":".*"/g,
+  '"devicefinger":""'
+);
+
+if (modifiedBody) {
+  modifiedBody = modifiedBody.replace(/eid=[^&]*/g, 'eid=');
+}
+
+$.done({ headers: modifiedHeaders, body: modifiedBody });
 
 // https://github.com/chavyleung/scripts/blob/master/Env.js
 // prettier-ignore
