@@ -172,6 +172,30 @@ try {
   ${tools}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.1/js.cookie.min.js"></script>
   <script>
+    function upsetArr(arr){
+      return arr.sort(function(){ return Math.random() - 0.5});
+    }
+
+    // 极速版反跟踪phone
+    const Storage_setItem = Storage.prototype.setItem;
+    Storage.prototype.setItem = function(key, value) { 
+        if (this === window.localStorage) {
+            // do what you want if setItem is called on localStorage
+        } else {
+
+          if(key === 'appEid') {
+              let appEidA = value.slice(0,5);
+              let appEidB = value.slice(5);
+              if (appEid) {
+                Storage_setItem.apply(this, [key, appEidA + upsetArr(appEidB.split("")).join("")]);
+              }
+          } else {
+            Storage_setItem.apply(this, [key, value]);
+          }
+        }
+    }
+    
+    
 
     // 兼容保价页面
     if(!Map.prototype.set){
