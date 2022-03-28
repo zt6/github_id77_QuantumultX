@@ -94,9 +94,10 @@ try {
       `</div>`;
   }
 
-  html = html.replace(
-    /(<body.*?>)/,
-    `$1
+  let scriptDoms = `<script src="https://unpkg.com/vconsole@3.14.2/dist/vconsole.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.1/js.cookie.min.js"></script>`;
+
+  const mitmContent = `$1
   <style>
     .vc-tab.hide {
       display: none !important;
@@ -170,7 +171,6 @@ try {
     }
   </style>
   ${tools}
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.1/js.cookie.min.js"></script>
   <script>
     function upsetArr(arr){
       return arr.sort(function(){ return Math.random() - 0.5});
@@ -340,22 +340,15 @@ try {
       }
     }
 
-    const _script = document.createElement('script');
-    _script.src = "https://unpkg.com/vconsole@3.12.0/dist/vconsole.min.js";
-    // _script.src = "https://unpkg.com/vconsole@latest/dist/vconsole.min.js";
-    // _script.doneState = { loaded: true, complete: true};
-    _script.onload = function() {
-      try {
-        setTimeout(() => {
-          __onReady(__init);
-        });
-        console.log("初始化成功");
-      } catch (err) {
-        console.log('_script.onload', err);
-      }
-    };
-    
-    document.getElementsByTagName('head')[0].appendChild(_script);
+    // const _script = document.createElement('script');
+    // _script.src = "https://unpkg.com/vconsole@3.12.0/dist/vconsole.min.js";
+    // // _script.src = "https://unpkg.com/vconsole@latest/dist/vconsole.min.js";
+    // // _script.doneState = { loaded: true, complete: true};
+    // _script.onload = function() {
+      
+    // };
+
+    __onReady(__init);
 
     function __onReady(fn){
       try {
@@ -403,7 +396,6 @@ try {
         __vConsole.hideSwitch();
         localStorage.setItem('vConsole_switch_hide', 'Y')
       }
-
 
       if (_cookies.length > 0) _changeBtns();
     }
@@ -461,6 +453,7 @@ try {
         window.__vConsole = new VConsole({
           onReady: () => {
             setTimeout(() => {
+              console.log("初始化成功");
               console.info(window.location.href);
             },3000);
           }
@@ -610,8 +603,14 @@ try {
       }
       document.body.removeChild(input);
     }
-  </script>`
-  );
+  </script>`;
+
+  html = html.replace(/<script.*v(C|c)onsole(\.min)?\.js.+script>/, '');
+  if (/(<\/title>)/.test(html)) {
+    html = html.replace(/(<\/title>)/, `$1${scriptDoms}${mitmContent}`);
+  } else {
+    html = html.replace(/(<script)/, `${scriptDoms}${mitmContent}$1`);
+  }
 } catch (error) {
   console.error(arguments.callee.name, error);
 }
