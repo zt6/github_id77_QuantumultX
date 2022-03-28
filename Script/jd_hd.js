@@ -97,7 +97,7 @@ try {
   let scriptDoms = `<script src="https://unpkg.com/vconsole@3.14.2/dist/vconsole.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.1/js.cookie.min.js"></script>`;
 
-  const mitmContent = `$1
+  const mitmContent = `
   <style>
     .vc-tab.hide {
       display: none !important;
