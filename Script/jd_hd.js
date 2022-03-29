@@ -94,8 +94,76 @@ try {
       `</div>`;
   }
 
-  let scriptDoms = `<script src="https://unpkg.com/vconsole@3.14.2/dist/vconsole.min.js"></script>
+  let mitmFuckEid = `<script>
+   function upsetArr(arr){
+      return arr.sort(function(){ return Math.random() - 0.5});
+    }
+
+    // 极速版反跟踪phone
+    const Storage_setItem = Storage.prototype.setItem;
+    Storage.prototype.setItem = function (key, value) {
+      // if (this === window.localStorage) {
+      //      // do what you want if setItem is called on localStorage
+      //     Storage_setItem.apply(this, [key, value]);
+      // } else {
+
+      if (key === 'appEid') {
+        let appEid = value.slice(5);
+        if (appEid) {
+          Storage_setItem.apply(this, [
+            key,
+            'eidif' + upsetArr(appEid.split('')).join(''),
+          ]);
+        }
+      } else {
+        Storage_setItem.apply(this, [key, value]);
+      }
+      // }
+    };
+  </script>`;
+
+  let scriptDoms = `<script src="https://unpkg.com/vconsole@3.14.3/dist/vconsole.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.1/js.cookie.min.js"></script>`;
+
+  let mitmFixContent = `<script>
+    // 兼容保价页面
+    if(!Map.prototype.set){
+      Map.prototype.set = function(_key, _value) { 
+        if (this.containsKey(_key) == true) {  
+            if(this.remove(_key) == true){ 
+              this.elements.push( { 
+                key : _key, 
+                value : _value 
+              }); 
+
+          }else{ 
+            this.elements.push( { 
+              key : _key, 
+              value : _value 
+            }); 
+          } 
+        } else { 
+          this.elements.push( { 
+            key : _key, 
+            value : _value 
+          }); 
+        } 
+      }
+      Map.prototype.has = function(_key) { 
+        var bln = false; 
+        try { 
+          for (i = 0; i < this.elements.length; i++) {  
+            if (this.elements[i].key == _key){ 
+              bln = true; 
+            } 
+          } 
+        }catch(e) { 
+          bln = false;  
+        } 
+        return bln; 
+      }
+    }
+  </script>`;
 
   const mitmContent = `
   <style>
@@ -172,69 +240,6 @@ try {
   </style>
   ${tools}
   <script>
-    function upsetArr(arr){
-      return arr.sort(function(){ return Math.random() - 0.5});
-    }
-
-    // 极速版反跟踪phone
-    const Storage_setItem = Storage.prototype.setItem;
-    Storage.prototype.setItem = function(key, value) { 
-        if (this === window.localStorage) {
-            // do what you want if setItem is called on localStorage
-        } else {
-
-          if(key === 'appEid') {
-              let appEidA = value.slice(0,5);
-              let appEidB = value.slice(5);
-              if (appEid) {
-                Storage_setItem.apply(this, [key, appEidA + upsetArr(appEidB.split("")).join("")]);
-              }
-          } else {
-            Storage_setItem.apply(this, [key, value]);
-          }
-        }
-    }
-    
-    
-
-    // 兼容保价页面
-    if(!Map.prototype.set){
-      Map.prototype.set = function(_key, _value) { 
-        if (this.containsKey(_key) == true) {  
-            if(this.remove(_key) == true){ 
-              this.elements.push( { 
-                key : _key, 
-                value : _value 
-              }); 
-
-          }else{ 
-            this.elements.push( { 
-              key : _key, 
-              value : _value 
-            }); 
-          } 
-        } else { 
-          this.elements.push( { 
-            key : _key, 
-            value : _value 
-          }); 
-        } 
-      }
-      Map.prototype.has = function(_key) { 
-        var bln = false; 
-        try { 
-          for (i = 0; i < this.elements.length; i++) {  
-            if (this.elements[i].key == _key){ 
-              bln = true; 
-            } 
-          } 
-        }catch(e) { 
-          bln = false;  
-        } 
-        return bln; 
-      }
-    }
-
     const _currentPin = Cookies.get('pt_pin');
     const _needHideSwitch = localStorage.getItem('vConsole_switch_hide') === 'Y';
 
@@ -449,15 +454,21 @@ try {
             }
           })
         }
-        
-        window.__vConsole = new VConsole({
+        const __vConsoleOptions = {
           onReady: () => {
             setTimeout(() => {
               console.log("初始化成功");
               console.info(window.location.href);
             },3000);
           }
-        });
+        }
+        
+        //  保价网络请求与vConsole监听冲突
+        if ('${$.domain}'.includes('msitepp-fm.jd.com')) {
+          __vConsoleOptions.defaultPlugins = ['system', 'element', 'storage'];
+        }
+
+        window.__vConsole = new VConsole(__vConsoleOptions);
         if (_needHideSwitch) {
           __vConsole.hideSwitch(); 
         }
@@ -607,10 +618,17 @@ try {
 
   html = html.replace(/<script.*v(C|c)onsole(\.min)?\.js.+script>/, '');
   if (/(<\/title>)/.test(html)) {
-    html = html.replace(/(<\/title>)/, `$1${scriptDoms}${mitmContent}`);
+    html = html.replace(
+      /(<\/title>)/,
+      `$1${mitmFuckEid}${scriptDoms}${mitmContent}`
+    );
   } else {
-    html = html.replace(/(<script)/, `${scriptDoms}${mitmContent}$1`);
+    html = html.replace(
+      /(<script)/,
+      `${mitmFuckEid}${scriptDoms}${mitmContent}$1`
+    );
   }
+  html = html.replace(/(<\/body>)/, `${mitmFixContent}$1`);
 } catch (error) {
   console.error(arguments.callee.name, error);
 }
