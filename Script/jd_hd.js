@@ -122,11 +122,7 @@ try {
     };
   </script>`;
 
-  let scriptDoms = `<script src="${
-    $.domain.includes('isv.isv')
-      ? 'https://unpkg.com/vconsole@v3.13.0/dist/vconsole.min.js'
-      : 'https://unpkg.com/vconsole@v3.14.3/dist/vconsole.min.js'
-  }"></script>
+  let scriptDoms = `<script src="https://unpkg.com/vconsole@v3.13.0/dist/vconsole.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.1/js.cookie.min.js"></script>`;
 
   let mitmFixContent = `<script>
@@ -466,11 +462,6 @@ try {
             },3000);
           }
         }
-        
-        //  保价网络请求与vConsole监听冲突
-        if ('${$.domain}'.includes('msitepp-fm.jd.com')) {
-          __vConsoleOptions.defaultPlugins = ['system', 'element', 'storage'];
-        }
 
         window.__vConsole = new VConsole(__vConsoleOptions);
         if (_needHideSwitch) {
@@ -621,11 +612,9 @@ try {
   </script>`;
 
   if (/<script.*v(C|c)onsole(\.min)?\.js.+script>/.test(html)) {
-    html = html.replace(
-      /<script.*v(C|c)onsole(\.min)?\.js.+script>/,
-      `${mitmFuckEid}${scriptDoms}${mitmContent}`
-    );
-  } else if (/(<\/title>)/.test(html)) {
+    html = html.replace(/<script.*v(C|c)onsole(\.min)?\.js.+script>/, ``);
+  }
+  if (/(<\/title>)/.test(html)) {
     html = html.replace(
       /(<\/title>)/,
       `$1${mitmFuckEid}${scriptDoms}${mitmContent}`
