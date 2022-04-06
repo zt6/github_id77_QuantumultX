@@ -47,9 +47,11 @@ $.log(`💡缓存数据：${length}条`);
 $.userNum = $.getData($.USER_NUM) || cookies.length;
 $.whitelist = $.getData($.WHITE_LIST) || '';
 
-cookiesArr = cookiesArr.filter((item) =>
-  $.whitelist.includes(item.match(/pin=([^;])+/)[1])
-);
+if ($.whitelist) {
+  cookiesArr = cookiesArr.filter((item) =>
+    $.whitelist.includes(item.match(/pin=([^;])+/)[1])
+  );
+}
 
 const total = $.pageMax * $.userNum;
 if (length > total) {
