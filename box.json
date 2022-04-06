@@ -29,6 +29,16 @@
           "desc": "默认值是最大 cookie 数量，不要大于 cookie 数量"
         },
         {
+          "id": "id77_jdWuLiu_userNum",
+          "name": "pin 白名单",
+          "val": "",
+          "type": "textarea",
+          "autoGrow": true,
+          "rows": 2,
+          "placeholder": "10",
+          "desc": "用&间隔，pin数量不能超过查询账号数量；用于多cookie，查询特定号。"
+        },
+        {
           "id": "id77_jdWuLiu_pageMax",
           "name": "查询条目",
           "val": "",

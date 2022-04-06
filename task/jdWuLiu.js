@@ -21,6 +21,7 @@ const $ = new Env('京东物流');
 $.PAGE_MAX_KEY = 'id77_jdWuLiu_pageMax';
 $.WAYBILL_CODE_ARR_KEY = 'id77_waybillCodeArr';
 $.USER_NUM = 'id77_jdWuLiu_userNum';
+$.WHITE_LIST = 'id77_jdWuLiu_whiteList';
 $.NEED_PHONE = 'id77_jdWuLiu_needPhone';
 $.PHONE_LIST_KEY = 'id77_jdWuLiu_phoneList';
 $.pageMax = $.getData($.PAGE_MAX_KEY) || 10;
@@ -44,6 +45,11 @@ const length = $.waybillCodeArr.length;
 $.log(`💡缓存数据：${length}条`);
 
 $.userNum = $.getData($.USER_NUM) || cookies.length;
+$.whitelist = $.getData($.WHITE_LIST) || '';
+
+cookiesArr = cookiesArr.filter((item) =>
+  $.whitelist.includes(item.match(/pin=([^;])+/)[1])
+);
 
 const total = $.pageMax * $.userNum;
 if (length > total) {
@@ -86,12 +92,12 @@ const opts = {
 
       orderList = [...orderList, ...(await getShopMallOrderCourierForList())];
     }
-    
+
     // 忽略已取消订单,已退款等
-    orderList = orderList.filter(wuLiuDetail => {
-      const { waybillNewStatusName, orderState } = wuLiuDetail;       
-              
-      return !blockWaybillNewStatusName.includes(waybillNewStatusName)
+    orderList = orderList.filter((wuLiuDetail) => {
+      const { waybillNewStatusName, orderState } = wuLiuDetail;
+
+      return !blockWaybillNewStatusName.includes(waybillNewStatusName);
     });
 
     for (let w = 0; w < orderList.length; w++) {
