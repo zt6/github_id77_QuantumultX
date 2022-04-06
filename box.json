@@ -29,7 +29,7 @@
           "desc": "默认值是最大 cookie 数量，不要大于 cookie 数量"
         },
         {
-          "id": "id77_jdWuLiu_userNum",
+          "id": "id77_jdWuLiu_whiteList",
           "name": "pin 白名单",
           "val": "",
           "type": "textarea",
