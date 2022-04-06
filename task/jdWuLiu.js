@@ -48,7 +48,7 @@ $.userNum = $.getData($.USER_NUM) || cookies.length;
 $.whitelist = $.getData($.WHITE_LIST) || '';
 
 if ($.whitelist) {
-  cookiesArr = cookiesArr.filter((item) =>
+  cookies = cookies.filter((item) =>
     $.whitelist.includes(item.match(/pin=([^;])+/)[1])
   );
 }
