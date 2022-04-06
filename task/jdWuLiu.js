@@ -49,7 +49,7 @@ $.whitelist = $.getData($.WHITE_LIST) || '';
 
 if ($.whitelist) {
   cookies = cookies.filter((item) =>
-    $.whitelist.includes(item.match(/pin=([^;])+/)[1])
+    $.whitelist.includes(item.match(/pin=([^;]+)/)[1])
   );
 }
 
