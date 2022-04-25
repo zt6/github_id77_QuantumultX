@@ -51,11 +51,10 @@ try {
   let url = $request.url.replace(/&un_area=[\d_]+/g, '');
   let sku;
   let arr = [];
-
-  if (url.includes('sku=')) {
+  if (/sku=\d+/.test(url)) {
     arr = url.match(/sku=(\d+)/);
   }
-  if (url.includes('wareId=')) {
+  if (/wareId=\d+/.test(url)) {
     arr = url.match(/wareId=(\d+)/);
   }
   if (url.includes('/product/')) {
@@ -627,7 +626,8 @@ try {
   }
   html = html.replace(/(<\/body>)/, `${mitmFixContent}$1`);
 } catch (error) {
-  console.error(arguments.callee.name, error);
+  // console.error(arguments.callee.name, error);
+  console.log(error);
 }
 
 $.done({
