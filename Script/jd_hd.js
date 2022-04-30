@@ -30,9 +30,14 @@ $.domainWhitelist.forEach((item) => {
 });
 
 let html = $response.body;
+let modifiedHeaders = $response.headers;
+if (modifiedHeaders['Content-Security-Policy'])
+  delete modifiedHeaders['Content-Security-Policy'];
+if (modifiedHeaders['X-XSS-Protection'])
+  delete modifiedHeaders['X-XSS-Protection'];
 
 if (!html.includes('</head>')) {
-  $.done();
+  $.done({ headers: modifiedHeaders });
 }
 
 try {
@@ -93,6 +98,16 @@ try {
       `</div>`;
   }
 
+  let copyObject = `<script>
+    // 复制一份
+    if(window.localStorage) {
+      window.localStorageCopy = window.localStorage
+    }
+    if(window.sessionStorage) {
+      window.sessionStorageCopy = window.sessionStorage
+    }
+  </script>`;
+
   let mitmFuckEid = `<script>
    function upsetArr(arr){
       return arr.sort(function(){ return Math.random() - 0.5});
@@ -121,7 +136,7 @@ try {
     };
   </script>`;
 
-  let scriptDoms = `<script src="https://unpkg.com/vconsole@v3.13.0/dist/vconsole.min.js"></script>
+  let scriptDoms = `<script src="https://unpkg.com/vconsole@v3.14.6/dist/vconsole.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.1/js.cookie.min.js"></script>`;
 
   let mitmFixContent = `<script>
@@ -411,6 +426,13 @@ try {
     function __init () {
       try {
 
+        if(!window.localStorage) {
+          window.localStorage = window.localStorageCopy
+        }
+        if(!window.sessionStorage) {
+          window.sessionStorage = window.sessionStorageCopy
+        }
+
         // 券链接 展示
         __showCouponLink = false;
         function showCouponLink() {
@@ -565,6 +587,13 @@ try {
               }); 
             }
           }
+
+          if(!window.localStorage) {
+            window.localStorage = window.localStorageCopy
+          }
+          if(!window.sessionStorage) {
+            window.sessionStorage = window.sessionStorageCopy
+          }
         }
   
         JDCKPlugin.on('show', scrollTopToCKDom);
@@ -613,15 +642,20 @@ try {
   if (/<script.*v(C|c)onsole(\.min)?\.js.+script>/.test(html)) {
     html = html.replace(/<script.*v(C|c)onsole(\.min)?\.js.+script>/, ``);
   }
-  if (/(<\/title>)/.test(html)) {
+  if (/(<link[^\n]+?\/>)/.test(html)) {
+    html = html.replace(
+      /(<link[^\n]+?\/>)/,
+      `${copyObject}${mitmFuckEid}${scriptDoms}${mitmContent}$1`
+    );
+  } else if (/(<\/title>)/.test(html)) {
     html = html.replace(
       /(<\/title>)/,
-      `$1${mitmFuckEid}${scriptDoms}${mitmContent}`
+      `$1${copyObject}${mitmFuckEid}${scriptDoms}${mitmContent}`
     );
   } else {
     html = html.replace(
       /(<script)/,
-      `${mitmFuckEid}${scriptDoms}${mitmContent}$1`
+      `${copyObject}${mitmFuckEid}${scriptDoms}${mitmContent}$1`
     );
   }
   html = html.replace(/(<\/body>)/, `${mitmFixContent}$1`);
@@ -631,6 +665,7 @@ try {
 }
 
 $.done({
+  headers: modifiedHeaders,
   body: html,
 });
 
