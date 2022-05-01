@@ -36,6 +36,17 @@ if (modifiedHeaders['Content-Security-Policy'])
 if (modifiedHeaders['X-XSS-Protection'])
   delete modifiedHeaders['X-XSS-Protection'];
 
+const cookies = $response.headers['Set-Cookie']
+  .replace(/HttpOnly/gi, '')
+  .replace(/(Expires=.+?),/gi, '$1@')
+  .split(', ');
+
+let key = 'Set-Cookie';
+cookies.forEach((ck, i) => {
+  key += ' ';
+  modifiedHeaders[key] = ck.replace(/@/g, ',');
+});
+
 if (!html.includes('</head>')) {
   $.done({ headers: modifiedHeaders });
 }
