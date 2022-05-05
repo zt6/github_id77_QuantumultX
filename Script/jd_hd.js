@@ -75,7 +75,7 @@ try {
   if (/wareId=\d+/.test(url)) {
     arr = url.match(/wareId=(\d+)/);
   }
-  if (/\/product\/(\d+)\.html/.test(url)) {
+  if (/\/product(?:\/\w+)?\/(\d+)\.html/.test(url)) {
     arr = url.match(/\/.*\/(\d+)\.html/);
   }
 
