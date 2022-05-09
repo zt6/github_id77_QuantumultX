@@ -90,7 +90,7 @@ try {
       const pin = decodeURI(cookie.match(/pt_pin=(.+?);/)[1]);
       cookieListDom += `<li data-cookie-index="${
         index + 1
-      }" id="_${pin}" class="_cookieDom" onclick="_changeCookie('${cookie}')">${pin}</li>`;
+      }" id="_${pin}" class="_id77_cookieDom" onclick="_id77_changeCookie('${cookie}')">${pin}</li>`;
     }
   }
   cookieListDom += `</ul>`;
@@ -99,15 +99,15 @@ try {
   if (cookies.length > 0) {
     tools =
       `
-    <div id="_btns">
-      <div id="cks" class="_btn hide"></div>
-      <div id="nextCookie" class="_btn hide"></div>
-      <div id="Foxok" class="_btn hide" onclick="window.location.href='Foxok://url?${url}'">
+    <div id="_id77_btns">
+      <div id="cks" class="_id77_btn _id77_hide"></div>
+      <div id="nextCookie" class="_id77_btn _id77_hide"></div>
+      <div id="Foxok" class="_id77_btn _id77_hide" onclick="window.location.href='Foxok://url?${url}'">
         <img src="data:image/jpg;base64,_9j_4AAQSkZJRgABAQAAAQABAAD_2wBDAAMCAgMCAgMDAgMDAwMDBAcFBAQEBAkGBwUHCgkLCwoJCgoMDREODAwQDAoKDhQPEBESExMTCw4UFhQSFhESExL_2wBDAQMDAwQEBAgFBQgSDAoMEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhL_wgARCAAgACADAREAAhEBAxEB_8QAGQABAQADAQAAAAAAAAAAAAAABwYCBAUJ_8QAGwEBAAIDAQEAAAAAAAAAAAAABgUHAAMEAQL_2gAMAwEAAhADEAAAAPUrX9CwB93Mj1CwCEEWRBNeWLryGNioLny-j1ftatBA0s5wrj8SXil1VvhaZbFf_8QAKxAAAgEDAgUDAwUAAAAAAAAAAQIDBAURAAYHEhMhQQgUMRWBkRYjU3Fy_9oACAEBAAE_AKmpiooJJ6p1hhhUu7scBQPJ1evU5bI62Sn2rb5rtGhx7pn6UT_5-Sf7xjW1uOVPeZUivNvkoOfsJUfqJ9_I1DMs8QeFlZGAKsDkEa4q7jpbZDRWy7wJPa7v1Irgr_wkcpP5YHVbw_k2LKKOjt1FuC41DFqf3dQUgSDJEZ5R3lkfGcdgNbM4xWutqb9ZazaNsg3Ft2n91NCHeNHiEnJKMdyrISp8ghhrgnxHO9o7lRPbYbYbWUMccMzSKyNnywGO4OuOFjlrrNT10CFxQsRKAM4RvOqXcdO89qku9xFBWWX9tJanPSnhByoLjPJIh-Ccgj8iu2Lt_btmvFx25a7RBdt5AT19ZR0vJJOhYuWdj3JZiTr09bSls9DdbpVIU-oyqkAPmNM9_uSdSwR1MTxzqrxuMMpGQRq6-n-y118grIJ5oKRJhJNREBkkAOeUZ7ga_Q8VXWvPdZuurHtEowoHwBqKFKeJY4UCIigKq9gANf_EACMRAAIBBAICAgMAAAAAAAAAAAIDAQAEERIFBjFhEyEyQVH_2gAIAQIBAT8AacKDaZ-orku_ISz40Dt7rje-JeWrR190toNiJCcxXY-TVbmtDPxPOafxVrZOwQ7kfj1TEWltbkw7fJD7rqPNjerJYL11913mwY1AvH71pN4NzKxNmph4nHmuw35ospURbGddB41iLcmsjG1MWDQmJjMTTek203cOCcR_KLqKHXcveW0_qKUqFBgY8V__xAAjEQABAwMEAwEBAAAAAAAAAAACAAEDBAUSBhEhMRMiQUJh_9oACAEDAQE_AAjczYBbdUOgqmSLyTlhv8Vw0jLTs_jLJOOD4krDQyTZzRv7Bs7KC9lc-ZJPGA98fVddPzxvEYVWUcnT7MtU2B7Y4k55MS0lWRRVJRSPwSqLcYNJ4AyA-_4rfWzz1QRyl6x9LWlzaolCFvygNwLce2VPrGsjpShfl3-oboYhsHDoycn3J-V__9k" />
       </div>` +
       (!sku
         ? ``
-        : `<button id="smzdm" class="_btn hide"></button><button id="manmanbuy" class="_btn hide"></button>`) +
+        : `<button id="smzdm" class="_id77_btn _id77_hide"></button><button id="manmanbuy" class="_id77_btn _id77_hide"></button>`) +
       `</div>`;
   }
 
@@ -122,7 +122,7 @@ try {
   </script>`;
 
   let mitmFuckEid = `<script>
-   function upsetArr(arr){
+   function _id77_upsetArr(arr){
       return arr.sort(function(){ return Math.random() - 0.5});
     }
 
@@ -139,7 +139,7 @@ try {
         if (appEid) {
           Storage_setItem.apply(this, [
             key,
-            'eidif' + upsetArr(appEid.split('')).join(''),
+            'eidif' + _id77_upsetArr(appEid.split('')).join(''),
           ]);
         }
       } else {
@@ -194,7 +194,7 @@ try {
 
   const mitmContent = `
   <style>
-    .vc-tab.hide {
+    .vc-tab._id77_hide {
       display: none !important;
     }
     * {
@@ -225,7 +225,10 @@ try {
       top: 15.7571em;
       background: url(data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjIwMCIgaGVpZ2h0PSIyMDAiIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48cGF0aCBmaWxsPSIjMjQ4NmZmIiBkPSJNMTQ1LjY1OSw2OC45NDljLTUuMTAxLTUuMjA4LTEzLjM3Mi01LjIwOC0xOC40NzMsMEw5OS40NzksOTcuMjMzIEw3MS43NzIsNjguOTQ5Yy01LjEtNS4yMDgtMTMuMzcxLTUuMjA4LTE4LjQ3MywwYy01LjA5OSw1LjIwOC01LjA5OSwxMy42NDgsMCwxOC44NTdsNDYuMTgsNDcuMTRsNDYuMTgxLTQ3LjE0IEMxNTAuNzU5LDgyLjU5OCwxNTAuNzU5LDc0LjE1NywxNDUuNjU5LDY4Ljk0OXoiLz48L3N2Zz4NCg==) #FFF no-repeat 0.291em/1.74em;
     }
-    ._btn {
+    .vc-panel {
+      z-index: 100000;
+    }
+    ._id77_btn {
       position: fixed;
       right: 0;
       z-index: 99999;
@@ -239,7 +242,7 @@ try {
       background-size: 80%;
       overflow: hidden;
     }
-    ._btn img {
+    ._id77_btn img {
       box-sizing: content-box;
       width: 2.1429em;
       height: 2.1429em;
@@ -258,35 +261,35 @@ try {
       border: 0.0714em solid #ccc;
       padding: 0.3571em;
     }
-    #_btns { 
+    #_id77_btns { 
       font-size: 14px;
     }
-    ._btn.hide {
+    ._id77_btn._id77_hide {
       display: none !important;
     }
   </style>
   ${tools}
   <script>
-    const _currentPin = Cookies.get('pt_pin');
-    const _needHideSwitch = localStorage.getItem('vConsole_switch_hide') === 'Y';
+    const _id77_currentPin = Cookies.get('pt_pin');
+    const _id77_needHideSwitch = localStorage.getItem('vConsole_switch_hide') === 'Y';
 
-    const _cookies = ${JSON.stringify(cookies)};
+    const _id77_cookies = ${JSON.stringify(cookies)};
 
     // ck同步最新
-    if(_currentPin) {
-      // console.log('_currentPin', encodeURI(_currentPin));
-      for (const ck of _cookies) {
+    if(_id77_currentPin) {
+      // console.log('_id77_currentPin', encodeURI(_id77_currentPin));
+      for (const ck of _id77_cookies) {
         const _pin = ck.match(/pt_pin=(.+?);/)[1];
         // console.log('_pin', _pin);
         
-        if(_pin === encodeURI(_currentPin)) {
-          _setCookie(ck);
+        if(_pin === encodeURI(_id77_currentPin)) {
+          _id77_setCookie(ck);
           console.log('已同步 cookie');
         }
       }
     }
 
-    function _clearData() {
+    function _id77_clearData() {
       sessionStorage.clear();
       localStorage.clear();
 
@@ -313,7 +316,7 @@ try {
 
     }
     
-    function _setCookie(cookie) {
+    function _id77_setCookie(cookie) {
 
       const other = { 
         path: '/',
@@ -339,33 +342,33 @@ try {
 
     }
 
-    function _changeCookie(cookie){
-      _clearData();
-      _setCookie(cookie);
+    function _id77_changeCookie(cookie){
+      _id77_clearData();
+      _id77_setCookie(cookie);
       window.location.reload();
     }
 
-    function _nextCookie() {
-      const cookieDomList = document.querySelectorAll("._cookieDom"); 
-      const cookieDom = document.querySelector("#_" + _currentPin);
+    function _id77_nextCookie() {
+      const cookieDomList = document.querySelectorAll("._id77_cookieDom"); 
+      const cookieDom = document.querySelector("#_" + _id77_currentPin);
 
       const index = [].indexOf.call(cookieDomList, cookieDom);
 
-      _changeCookie(_cookies[index + 1]);
+      _id77_changeCookie(_id77_cookies[index + 1]);
     }
 
-    const _btnIDs = [
+    const _id77_btnIDs = [
       'smzdm',
       'manmanbuy',
     ];
     
-    if (_btnIDs.length > 0) {
-      for (const _btnID of _btnIDs) {
+    if (_id77_btnIDs.length > 0) {
+      for (const _btnID of _id77_btnIDs) {
         const _btn = document.querySelector('#' + _btnID);
 
         if (_btn) {
           _btn.addEventListener('click',() => {
-            __copyText('https://item.jd.com/${sku}.html?' + Math.random());
+            _id77_copyText('https://item.jd.com/${sku}.html?' + Math.random());
             window.location.href= _btnID + '://';
           })
         }
@@ -380,9 +383,9 @@ try {
       
     // };
 
-    __onReady(__init);
+    _id77_onReady(_id77_init);
 
-    function __onReady(fn){
+    function _id77_onReady(fn){
       try {
         const readyState = document.readyState;
         if(readyState === 'interactive' || readyState === 'complete') {
@@ -396,47 +399,47 @@ try {
       }
     }
 
-    function _changeBtns() {
-      const $btns = document.querySelectorAll('._btn');
+    function _id77_changeBtns() {
+      const $btns = document.querySelectorAll('._id77_btn');
       Array.prototype.forEach.call($btns, function(el, i){
-        if (el.classList.contains('hide')){
-          el.classList.remove('hide');
+        if (el.classList.contains('_id77_hide')){
+          el.classList.remove('_id77_hide');
         } else {
-          el.classList.add('hide');
+          el.classList.add('_id77_hide');
         }
       });
     }
 
-    function _changeTabs() {
+    function _id77_changeTabs() {
       const $tabs = document.querySelectorAll('.vc-tab');
       Array.prototype.forEach.call($tabs, function(el, i){
         if (i === 0 || i === 2 || i > 3) return;
-        if (el.classList.contains('hide')){
-          el.classList.remove('hide');
+        if (el.classList.contains('_id77_hide')){
+          el.classList.remove('_id77_hide');
         } else {
-          el.classList.add('hide');
+          el.classList.add('_id77_hide');
         }
       });
     }
 
-    function _changeMitmUI() {
+    function _id77_changeMitmUI() {
       const vcSwitch = document.querySelector('.vc-switch');
       if (vcSwitch.style.display == 'none') {
-        __vConsole.showSwitch();
+         _id77_vConsole.showSwitch();
         localStorage.setItem('vConsole_switch_hide', 'N')
       } else {
-        __vConsole.hideSwitch();
+         _id77_vConsole.hideSwitch();
         localStorage.setItem('vConsole_switch_hide', 'Y')
       }
 
-      if (_cookies.length > 0) _changeBtns();
+      if (_id77_cookies.length > 0) _id77_changeBtns();
     }
     
     document.addEventListener('dblclick', function (e) {
-      _changeMitmUI();
+      _id77_changeMitmUI();
     });
     
-    function __init () {
+    function _id77_init () {
       try {
 
         if(!window.localStorage) {
@@ -488,7 +491,7 @@ try {
             }
           })
         }
-        const __vConsoleOptions = {
+        const  _id77_vConsoleOptions = {
           onReady: () => {
             setTimeout(() => {
               console.log("初始化成功");
@@ -497,12 +500,12 @@ try {
           }
         }
 
-        window.__vConsole = new VConsole(__vConsoleOptions);
-        if (_needHideSwitch) {
-          __vConsole.hideSwitch(); 
+        window. _id77_vConsole = new VConsole( _id77_vConsoleOptions);
+        if (_id77_needHideSwitch) {
+           _id77_vConsole.hideSwitch(); 
         }
   
-        __vConsole.setSwitchPosition(10, 50);
+         _id77_vConsole.setSwitchPosition(10, 50);
         const JDCKPlugin = new VConsole.VConsolePlugin("jd_cookie", "京东CK");
 
         JDCKPlugin.on('renderTab', function (callback) {
@@ -520,8 +523,8 @@ try {
             name: "显隐图标",
             global: false,
             onClick: function (event) {
-              __vConsole.hide();
-              _changeBtns();
+              _id77_vConsole.hide();
+              _id77_changeBtns();
             },
           });
   
@@ -529,24 +532,24 @@ try {
             name: "其他工具",
             global: true,
             onClick: function (event) {
-              _changeTabs();
+              _id77_changeTabs();
             },
           });
   
           const cksDom = document.querySelector('#cks');
           cksDom.addEventListener('click', (e) => {
-            __vConsole.show();
-            __vConsole.showPlugin("jd_cookie");
+             _id77_vConsole.show();
+             _id77_vConsole.showPlugin("jd_cookie");
             e.stopPropagation();
           })
           cksDom.addEventListener('dblclick', function (e) {
-            _changeCookie(_cookies[0]);
+            _id77_changeCookie(_id77_cookies[0]);
             e.stopPropagation();
           });
   
           const nextCookieDom = document.querySelector('#nextCookie');
           nextCookieDom.addEventListener('click', (e) => {
-            _nextCookie();
+            _id77_nextCookie();
             e.stopPropagation();
           })
           
@@ -555,22 +558,22 @@ try {
         
         JDCKPlugin.on('ready', function() {
   
-          if (!_needHideSwitch) {
-            const $btns = document.querySelectorAll('._btn');
+          if (!_id77_needHideSwitch) {
+            const $btns = document.querySelectorAll('._id77_btn');
             Array.prototype.forEach.call($btns, function(el, i){
-              el.classList.remove('hide');
+              el.classList.remove('_id77_hide');
             });
           }
   
           const fontSize = document.querySelector('#__vconsole').style.fontSize;
   
           if(fontSize) {
-            document.querySelector('#_btns').style.fontSize = fontSize;
+            document.querySelector('#_id77_btns').style.fontSize = fontSize;
           }
   
-          const _currentCKDom = document.querySelector("#_" + _currentPin);
+          const _currentCKDom = document.querySelector("#_" + _id77_currentPin);
   
-          if (_currentPin && _currentCKDom) {
+          if (_id77_currentPin && _currentCKDom) {
             setTimeout(() => {
               _currentCKDom.style.background = '#238636';
             });
@@ -581,7 +584,7 @@ try {
         function scrollTopToCKDom(reset) {
           const fontSize = document.querySelector('#__vconsole').style.fontSize;
   
-          const _currentCKDom = document.querySelector("#_" + _currentPin);
+          const _currentCKDom = document.querySelector("#_" + _id77_currentPin);
           const _VCcontext = document.querySelector('.vc-content');
   
           if (reset) {
@@ -614,14 +617,14 @@ try {
         JDCKPlugin.on('hideConsole', () => scrollTopToCKDom(true));
   
         if (${$.isNeedToolsDomain}) {
-          if (_cookies.length > 0) {
-            __vConsole.addPlugin(JDCKPlugin);
-            __vConsole.showPlugin("jd_cookie");
-            _changeTabs();
+          if (_id77_cookies.length > 0) {
+             _id77_vConsole.addPlugin(JDCKPlugin);
+             _id77_vConsole.showPlugin("jd_cookie");
+            _id77_changeTabs();
           }
         }
   
-        __vConsole.showPlugin("default");
+         _id77_vConsole.showPlugin("default");
   
         function createDom(str) {
           let newDiv = document.createElement("div");
@@ -629,7 +632,7 @@ try {
           newDiv.appendChild(newContent);
           newDiv.style.fontSize = "16px";
           newDiv.addEventListener('click', (e) => {
-             __copyText(str)
+             _id77_copyText(str)
           })
           return newDiv;
         }
@@ -638,7 +641,7 @@ try {
       }
     }
 
-    function __copyText(text) {
+    function _id77_copyText(text) {
       const input = document.createElement('input');
       input.setAttribute('readonly', 'readonly');
       input.setAttribute('value', text);
