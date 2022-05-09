@@ -658,15 +658,15 @@ try {
   if (/<script.*v(C|c)onsole(\.min)?\.js.+script>/.test(html)) {
     html = html.replace(/<script.*v(C|c)onsole(\.min)?\.js.+script>/, ``);
   }
-  if (/(<link[^\n]+?\/>)/.test(html)) {
+  if (/(<meta\scharset=[^>]+>)/.test(html)) {
     html = html.replace(
-      /(<link[^\n]+?\/>)/,
-      `${copyObject}${mitmFuckEid}${scriptDoms}${mitmContent}$1`
-    );
-  } else if (/(<\/title>)/.test(html)) {
-    html = html.replace(
-      /(<\/title>)/,
+      /(<meta\scharset=[^>]+>)/,
       `$1${copyObject}${mitmFuckEid}${scriptDoms}${mitmContent}`
+    );
+  } else if (/(<(?:style|link)[\s\S]+<\/head>)/.test(html)) {
+    html = html.replace(
+      /(<(?:style|link)[\s\S]+<\/head>)/,
+      `${copyObject}${mitmFuckEid}${scriptDoms}${mitmContent}$1`
     );
   } else {
     html = html.replace(
