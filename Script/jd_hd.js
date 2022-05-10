@@ -244,8 +244,8 @@ try {
     }
     ._id77_btn img {
       box-sizing: content-box;
-      width: 2.1429em;
-      height: 2.1429em;
+      width: 2.1429em !important;
+      height: 2.1429em !important;
       border: 1px solid rgba(255,255,255,0.8);
       background: #FFF;
       border-radius: 50px 0 0 50px;
