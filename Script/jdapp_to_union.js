@@ -199,7 +199,10 @@ function setReqOpts(method, _360buy_param_json) {
       $.desc = diyData.briefInfo;
       $.copyText = diyData.details;
       setScheme(
-        diyData.shortUrl || diyData.promotionUrl || diyData.originalContext
+        diyData.cvLink ||
+          diyData.shortUrl ||
+          diyData.promotionUrl ||
+          diyData.originalContext
       );
 
       $.log(`🔗scheme：\n${$.openUrl}`);
@@ -210,7 +213,8 @@ function setReqOpts(method, _360buy_param_json) {
         'update-pasteboard':
           diyCopy === 'diy'
             ? $.copyText
-            : diyData.shortUrl ||
+            : diyData.cvLink ||
+              diyData.shortUrl ||
               diyData.promotionUrl ||
               diyData.originalContext,
       };
