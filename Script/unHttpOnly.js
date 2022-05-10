@@ -1,16 +1,18 @@
 const $ = new Env('移除HttpOnly');
 
 const modifiedHeaders = $response.headers;
-const cookies = $response.headers['Set-Cookie']
-  .replace(/HttpOnly/gi, '')
-  .replace(/(Expires=.+?),/gi, '$1@')
-  .split(', ');
+if ($response.headers['Set-Cookie']) {
+  const cookies = $response.headers['Set-Cookie']
+    .replace(/HttpOnly/gi, '')
+    .replace(/(Expires=.+?),/gi, '$1@')
+    .split(', ');
 
-let key = 'Set-Cookie';
-cookies.forEach((ck, i) => {
-  key += ' ';
-  modifiedHeaders[key] = ck.replace(/@/g, ',');
-});
+  let key = 'Set-Cookie';
+  cookies.forEach((ck, i) => {
+    key += ' ';
+    modifiedHeaders[key] = ck.replace(/@/g, ',');
+  });
+}
 
 $.done({ headers: modifiedHeaders });
 
