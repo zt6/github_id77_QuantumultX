@@ -29,7 +29,8 @@ $.domainWhitelist.forEach((item) => {
   }
 });
 
-let html = $response.body;
+let html = $response.body || '';
+// console.log(`html:${html}`);
 let modifiedHeaders = $response.headers;
 if (modifiedHeaders['Content-Security-Policy'])
   delete modifiedHeaders['Content-Security-Policy'];
@@ -322,7 +323,7 @@ try {
       const other = { 
         path: '/',
         expires: 30,
-        SameSite: 'Strict',
+        // SameSite: 'Strict',
         // secure: true
       };
 
@@ -656,17 +657,17 @@ try {
     }
   </script>`;
 
-  if (/<script.*v(C|c)onsole(\.min)?\.js.+script>/.test(html)) {
-    html = html.replace(/<script.*v(C|c)onsole(\.min)?\.js.+script>/, ``);
+  if (/<script.*v(C|c)onsole(\.min)?\.js.+?script>/.test(html)) {
+    html = html.replace(/<script.*v(C|c)onsole(\.min)?\.js.+?script>/, ``);
   }
-  if (/(<meta\scharset=[^>]+>)/.test(html)) {
+  if (/(<meta\scharset=[^>]+?>)/.test(html)) {
     html = html.replace(
-      /(<meta\scharset=[^>]+>)/,
+      /(<meta\scharset=[^>]+?>)/,
       `$1${copyObject}${mitmFuckEid}${scriptDoms}${mitmContent}`
     );
-  } else if (/(<(?:style|link)[\s\S]+<\/head>)/.test(html)) {
+  } else if (/(<(?:style|link)[\s\S]+?<\/head>)/.test(html)) {
     html = html.replace(
-      /(<(?:style|link)[\s\S]+<\/head>)/,
+      /(<(?:style|link)[\s\S]+?<\/head>)/,
       `${copyObject}${mitmFuckEid}${scriptDoms}${mitmContent}$1`
     );
   } else {
