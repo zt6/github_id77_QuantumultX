@@ -507,7 +507,6 @@ try {
            _id77_vConsole.hideSwitch(); 
         }
   
-         _id77_vConsole.setSwitchPosition(10, 50);
         const JDCKPlugin = new VConsole.VConsolePlugin("jd_cookie", "京东CK");
 
         JDCKPlugin.on('renderTab', function (callback) {
@@ -660,7 +659,7 @@ try {
   if (/<script.*v(C|c)onsole(\.min)?\.js.+?script>/.test(html)) {
     html = html.replace(/<script.*v(C|c)onsole(\.min)?\.js.+?script>/, ``);
   }
-  if (/(<meta\scharset=[^>]+?>)/.test(html)) {
+  if (/(<meta\s(?:user\-scalable|charset)=[^>]+?>)/.test(html)) {
     html = html.replace(
       /(<meta\scharset=[^>]+?>)/,
       `$1${copyObject}${mitmFuckEid}${scriptDoms}${mitmContent}`
