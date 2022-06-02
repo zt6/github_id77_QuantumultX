@@ -270,7 +270,6 @@ try {
       display: none !important;
     }
   </style>
-  ${tools}
   <script>
     const _id77_currentPin = Cookies.get('pt_pin');
     const _id77_needHideSwitch = localStorage.getItem('vConsole_switch_hide') === 'Y';
@@ -675,7 +674,7 @@ try {
       `${copyObject}${mitmFuckEid}${scriptDoms}${mitmContent}$1`
     );
   }
-  html = html.replace(/(<\/body>)/, `${mitmFixContent}$1`);
+  html = html.replace(/(<\/body>)/, `${tools}${mitmFixContent}$1`);
 } catch (error) {
   // console.error(arguments.callee.name, error);
   console.log(error);
