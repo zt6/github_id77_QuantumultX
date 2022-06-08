@@ -674,7 +674,7 @@ try {
       `${copyObject}${mitmFuckEid}${scriptDoms}${mitmContent}$1`
     );
   }
-  html = html.replace(/(<\/body>)/, `${tools}${mitmFixContent}$1`);
+  html = html.replace(/(<\/body>)(?![\s\S]*\1)/, `${tools}${mitmFixContent}$1`);
 } catch (error) {
   // console.error(arguments.callee.name, error);
   console.log(error);
