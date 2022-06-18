@@ -358,24 +358,6 @@ try {
       _id77_changeCookie(_id77_cookies[index + 1]);
     }
 
-    const _id77_btnIDs = [
-      'smzdm',
-      'manmanbuy',
-    ];
-    
-    if (_id77_btnIDs.length > 0) {
-      for (const _btnID of _id77_btnIDs) {
-        const _btn = document.querySelector('#' + _btnID);
-
-        if (_btn) {
-          _btn.addEventListener('click',() => {
-            _id77_copyText('https://item.jd.com/${sku}.html?' + Math.random());
-            window.location.href= _btnID + '://';
-          })
-        }
-      }
-    }
-
     // const _script = document.createElement('script');
     // _script.src = "https://unpkg.com/vconsole@3.12.0/dist/vconsole.min.js";
     // // _script.src = "https://unpkg.com/vconsole@latest/dist/vconsole.min.js";
@@ -441,6 +423,24 @@ try {
     });
     
     function _id77_init () {
+      const _id77_btnIDs = [
+        'smzdm',
+        'manmanbuy',
+      ];
+      
+      if (_id77_btnIDs.length > 0) {
+        for (const _btnID of _id77_btnIDs) {
+          const _btn = document.querySelector('#' + _btnID);
+
+          if (_btn) {
+            _btn.addEventListener('click',() => {
+              _id77_copyText('https://item.jd.com/${sku}.html?' + Math.random());
+              window.location.href= _btnID + '://';
+            })
+          }
+        }
+      }
+
       try {
 
         if(!window.localStorage) {
