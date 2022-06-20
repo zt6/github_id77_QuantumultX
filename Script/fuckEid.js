@@ -14,15 +14,28 @@ let modifiedBody = $request.body;
 //   '"devicefinger":""'
 // );
 modifiedHeaders['Cookie'] = modifiedHeaders['Cookie'].replace(
-  /"devicefinger":".*"/g,
+  /("devicefinger":")([^"]*)/g,
   '"devicefinger":""'
 );
 
 if (modifiedBody) {
-  modifiedBody = modifiedBody.replace(/eid=[^&]*/g, 'eid=');
+  // 校验参数，不能替换
+  // modifiedBody = modifiedBody.replace(/(eid=)([^&]*)/g, handleReplace);
 }
 
 $.done({ headers: modifiedHeaders, body: modifiedBody });
+
+function handleReplace(match, p1, p2) {
+  return (
+    p1 +
+    p2
+      .split('')
+      .sort(function () {
+        return Math.random() - 0.5;
+      })
+      .join('')
+  );
+}
 
 // https://github.com/chavyleung/scripts/blob/master/Env.js
 // prettier-ignore
