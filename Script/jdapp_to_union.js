@@ -20,7 +20,7 @@ const diyCopy = $.getData('id77_JDLM_copy'); // copy  文案
 
 $.log(`🔗捕获：\n${$request.url}`);
 const url = $request.url.replace(/https?:\/\//g, '');
-const UA = $request.headers['User-Agent'];
+const UA = $request.headers['User-Agent'] || $request.headers['user-agent'];
 let appType = UA.match(/(.+?);/)[1];
 let sku;
 let arr = [];

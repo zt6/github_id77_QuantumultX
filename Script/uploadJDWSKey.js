@@ -22,7 +22,7 @@ http-request ^https:\/\/api\-dd\.jd\.com\/client\.action\?functionId=getSessionL
  */
 
 const $ = new Env('🍪上传 wskey');
-const UA = $request.headers['User-Agent'];
+const UA = $request.headers['User-Agent'] || $request.headers['user-agent'];
 let CK = $request.headers['Cookie'] || $request.headers['cookie'];
 $.user = 'id77';
 let pin, key;
