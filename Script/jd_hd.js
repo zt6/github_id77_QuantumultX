@@ -685,9 +685,9 @@ try {
   if (/<script.*v(C|c)onsole(\.min)?\.js.+?script>/.test(html)) {
     html = html.replace(/<script.*v(C|c)onsole(\.min)?\.js.+?script>/, ``);
   }
-  if (/(<meta.+charset="?utf\-?8[^\n]+>)/.test(html)) {
+  if (/(<meta.+?charset="?utf\-?8[^\n]+?>)/.test(html)) {
     html = html.replace(
-      /(<meta.+charset="?utf\-?8[^\n]+>)/,
+      /(<meta.+?charset="?utf\-?8[^\n]+?>)/,
       `$1${copyObject}${mitmFuckEid}${scriptDoms}${mitmContent}`
     );
   } else if (/(<(?:style|link)[\s\S]+?<\/head>)/.test(html)) {
@@ -701,9 +701,10 @@ try {
       `${copyObject}${mitmFuckEid}${scriptDoms}${mitmContent}$1`
     );
   }
-  if (/(<\/(?:title|script)>)/.test(html)) {
-    html = html.replace(/(<\/(?:title|script)>)/, `$1${tools}`);
+  if (/(<\/(?:title|div)>)/.test(html)) {
+    html = html.replace(/(<\/(?:title|div)>)/, `$1${tools}`);
   }
+
   html = html.replace(/(<\/body>)(?![\s\S]*\1)/, `${mitmFixContent}$1`);
 } catch (error) {
   // console.error(arguments.callee.name, error);
