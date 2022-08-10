@@ -35,7 +35,7 @@ $.domainWhitelist.forEach((item) => {
 
 let html = $response.body || '';
 // console.log(`html:${html}`);
-let modifiedHeaders = $response.headers;
+let modifiedHeaders = { ...$response.headers };
 if (modifiedHeaders['Content-Security-Policy'])
   delete modifiedHeaders['Content-Security-Policy'];
 if (modifiedHeaders['X-XSS-Protection'])
@@ -685,9 +685,9 @@ try {
   if (/<script.*v(C|c)onsole(\.min)?\.js.+?script>/.test(html)) {
     html = html.replace(/<script.*v(C|c)onsole(\.min)?\.js.+?script>/, ``);
   }
-  if (/(<meta\s(?:user\-scalable|charset)=[^>]+?>)/.test(html)) {
+  if (/(<meta.+charset="?utf\-?8[^\n]+>)/.test(html)) {
     html = html.replace(
-      /(<meta\scharset=[^>]+?>)/,
+      /(<meta.+charset="?utf\-?8[^\n]+>)/,
       `$1${copyObject}${mitmFuckEid}${scriptDoms}${mitmContent}`
     );
   } else if (/(<(?:style|link)[\s\S]+?<\/head>)/.test(html)) {
@@ -701,7 +701,10 @@ try {
       `${copyObject}${mitmFuckEid}${scriptDoms}${mitmContent}$1`
     );
   }
-  html = html.replace(/(<\/body>)(?![\s\S]*\1)/, `${tools}${mitmFixContent}$1`);
+  if (/(<\/(?:title|script)>)/.test(html)) {
+    html = html.replace(/(<\/(?:title|script)>)/, `$1${tools}`);
+  }
+  html = html.replace(/(<\/body>)(?![\s\S]*\1)/, `${mitmFixContent}$1`);
 } catch (error) {
   // console.error(arguments.callee.name, error);
   console.log(error);
@@ -709,6 +712,7 @@ try {
 
 $.done({
   body: html,
+  headers: modifiedHeaders,
 });
 
 // https://github.com/chavyleung/scripts/blob/master/Env.js
