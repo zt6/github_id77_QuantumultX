@@ -22,7 +22,11 @@ const $ = new Env('京东助手', { noLog: true });
 $.domain = $request.url.match(/https?:\/\/([^\/]+)/)[1];
 $.domainWhitelist = ['jd.com', 'jd.hk', 'jingxi.com'];
 $.isNeedToolsDomain = false;
+$.seckill = false;
 
+if ($request.url.includes('/seckill')) {
+  $.seckill = true;
+}
 $.domainWhitelist.forEach((item) => {
   if ($.domain.includes(item)) {
     $.isNeedToolsDomain = true;
@@ -120,6 +124,7 @@ try {
     if(window.sessionStorage) {
       window.sessionStorageCopy = window.sessionStorage
     }
+    const _id77_Map = Map;
   </script>`;
 
   let mitmFuckEid = `<script>
@@ -154,41 +159,43 @@ try {
   <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.1/js.cookie.min.js"></script>`;
 
   let mitmFixContent = `<script>
-    // 兼容保价页面
-    if(!Map.prototype.set){
-      Map.prototype.set = function(_key, _value) { 
-        if (this.containsKey(_key) == true) {  
-            if(this.remove(_key) == true){ 
-              this.elements.push( { 
+    if (Map !== _id77_Map) {
+      // 兼容保价页面
+      if(!Map.prototype.set &&((Map.toString && Map.toString()) || '').includes('this.elements')){
+        Map.prototype.set = function(_key, _value) { 
+          if (this.containsKey(_key) == true) {  
+            if (this.remove(_key) == true) { 
+                this.elements.push({ 
+                  key : _key, 
+                  value : _value 
+                }); 
+
+            } else { 
+              this.elements.push({ 
                 key : _key, 
                 value : _value 
               }); 
-
-          }else{ 
-            this.elements.push( { 
+            } 
+          } else { 
+            this.elements.push({ 
               key : _key, 
               value : _value 
             }); 
           } 
-        } else { 
-          this.elements.push( { 
-            key : _key, 
-            value : _value 
-          }); 
-        } 
-      }
-      Map.prototype.has = function(_key) { 
-        var bln = false; 
-        try { 
-          for (i = 0; i < this.elements.length; i++) {  
-            if (this.elements[i].key == _key){ 
-              bln = true; 
+        }
+        Map.prototype.has = function(_key) { 
+          var bln = false; 
+          try { 
+            for (i = 0; i < this.elements.length; i++) {  
+              if (this.elements[i].key == _key){ 
+                bln = true; 
+              } 
             } 
+          } catch (e) { 
+            bln = false;  
           } 
-        }catch(e) { 
-          bln = false;  
-        } 
-        return bln; 
+          return bln; 
+        }
       }
     }
   </script>`;
@@ -497,11 +504,23 @@ try {
             setTimeout(() => {
               console.log("初始化成功");
               console.info(window.location.href);
+              if (${$.seckill}) {
+              console.log('#seckill');
+              let $seckillSubDom;
+              setInterval(() => { 
+                if (!$seckillSubDom) $seckillSubDom = document.querySelector('button.submit-btn');
+                if($seckillSubDom) {
+                  $seckillSubDom.click();
+                  console.count('seckill');
+                }
+              }, 600);
+            }
             },3000);
           }
         }
 
-        window. _id77_vConsole = new VConsole( _id77_vConsoleOptions);
+        Map = _id77_Map;
+        window._id77_vConsole = new VConsole(_id77_vConsoleOptions);
         if (_id77_needHideSwitch) {
            _id77_vConsole.hideSwitch(); 
         }
@@ -535,6 +554,15 @@ try {
               _id77_changeTabs();
             },
           });
+
+          toolList.push({
+            name: "submit",
+            global: true,
+            onClick: function (event) {
+              setInterval(() => document.querySelector('button.submit-btn').click(), 600);
+              _id77_vConsole.hide();
+            },
+          });
   
           const cksDom = document.querySelector('#cks');
           cksDom.addEventListener('click', (e) => {
@@ -557,7 +585,6 @@ try {
         });
         
         JDCKPlugin.on('ready', function() {
-  
           if (!_id77_needHideSwitch) {
             const $btns = document.querySelectorAll('._id77_btn');
             Array.prototype.forEach.call($btns, function(el, i){
@@ -681,7 +708,6 @@ try {
 }
 
 $.done({
-  headers: modifiedHeaders,
   body: html,
 });
 
