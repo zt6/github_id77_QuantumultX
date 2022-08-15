@@ -432,7 +432,7 @@ try {
     function _id77_init () {
       const observer = new MutationObserver((mutationsList) => {
         mutationsList.forEach(function (mutation) {
-            const target = mutation.target;
+            let target = mutation.target;
             let href = '';
             // if (!target || !target.render) {
             //     return;
@@ -448,12 +448,22 @@ try {
             //     target.render();
             //     break;
             // }
-            if (target && target.tagName === 'A') {
-              href = target.getAttribute('href');
-              if (href && /^(?!https?).+?:\\/\\//.test(href)) {
-                console.log('监听到 注入 scheme Dom！！！')
-                console.log(href)
-                document.body.removeChild(target);
+            if (target) {
+              if (target.tagName === 'A') {
+                href = target.getAttribute('href');
+                if (href && /^(?!https?).+?:\\/\\//.test(href)) {
+                  console.log('监听到 注入 scheme Dom！！！')
+                  console.log(href)
+                  document.body.removeChild(target);
+                }
+              } else {
+                target = target.querySelector('a');
+                href = target.getAttribute('href');
+                if (href && /^(?!https?).+?:\\/\\//.test(href)) {
+                  console.log('监听到 注入 scheme Dom！！！')
+                  console.log(href)
+                  document.body.removeChild(target);
+                }
               }
             }
         });
