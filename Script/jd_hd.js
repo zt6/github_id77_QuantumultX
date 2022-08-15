@@ -517,6 +517,14 @@ try {
                   console.count('seckill');
                 }
               }, 600);
+
+              document.addEventListener('click', function (e) {
+                const $dom = e.target;
+                if ($dom.className.includes('vc-log-val')) {
+                  // console.log($dom.outerText);
+                  _id77_copyText($dom.outerText);
+                }
+              });
             }
             },3000);
           }
