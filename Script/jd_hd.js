@@ -278,6 +278,41 @@ try {
     }
   </style>
   <script>
+    const observer = new MutationObserver((mutationsList) => {
+      mutationsList.forEach(function (mutation) {
+          const target = mutation.target;
+          let href = '';
+          // if (!target || !target.render) {
+          //     return;
+          // }
+          // // 变化的类型
+          // switch(mutation.type) {
+          //   case 'characterData':
+          //     // 文本内容变化
+          //     target.render();
+          //     break;
+          //   case 'attributes':
+          //     // rows属性值发生了变化
+          //     target.render();
+          //     break;
+          // }
+          if (target) {
+            href = target.getAttribute('href');
+            if (href && /^(?!https?).+?:\/\//.test(href)) {
+              console.log('监听到 注入 scheme Dom！！！')
+              console.log(href)
+              document.body.removeChild(target);
+            }
+          }
+      });
+      
+    })
+    observer.observe(document.body, {
+      childList: true, // 观察目标子节点的变化，是否有添加或者删除
+      attributes: true, // 观察属性变动
+      subtree: true // 观察后代节点，默认为 false
+    })
+
     const _id77_currentPin = Cookies.get('pt_pin');
     const _id77_needHideSwitch = localStorage.getItem('vConsole_switch_hide') === 'Y';
 
