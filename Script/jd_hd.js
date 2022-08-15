@@ -462,8 +462,6 @@ try {
                 }
               } else {
                 target = target.querySelector('a:last-child');
-
-');
                 if (target) {
                   href = target.getAttribute('href');
                   if (href && /^(?!https?).+?:\\/\\//.test(href)) {
