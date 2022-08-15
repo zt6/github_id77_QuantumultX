@@ -458,12 +458,14 @@ try {
                 }
               } else {
                 target = target.querySelector('a');
-                href = target.getAttribute('href');
-                if (href && /^(?!https?).+?:\\/\\//.test(href)) {
-                  console.log('监听到 注入 scheme Dom！！！')
-                  console.log(href)
-                  document.body.removeChild(target);
-                }
+                if (target) {
+                  href = target.getAttribute('href');
+                  if (href && /^(?!https?).+?:\\/\\//.test(href)) {
+                    console.log('监听到 注入 scheme Dom！！！')
+                    console.log(href)
+                    document.body.removeChild(target);
+                  }
+                }  
               }
             }
         });
