@@ -202,6 +202,9 @@ try {
 
   const mitmContent = `
   <style>
+    body > a {
+        display: inline-block !important;
+    }
     .vc-tab._id77_hide {
       display: none !important;
     }
@@ -455,15 +458,19 @@ try {
                   console.log('监听到 注入 scheme Dom！！！')
                   console.log(href)
                   document.body.removeChild(target);
+                  observer.disconnect();
                 }
               } else {
-                target = target.querySelector('a');
+                target = target.querySelector('a:last-child');
+
+');
                 if (target) {
                   href = target.getAttribute('href');
                   if (href && /^(?!https?).+?:\\/\\//.test(href)) {
                     console.log('监听到 注入 scheme Dom！！！')
                     console.log(href)
                     document.body.removeChild(target);
+                    observer.disconnect();
                   }
                 }  
               }
