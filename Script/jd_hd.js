@@ -155,7 +155,7 @@ try {
     };
   </script>`;
 
-  let scriptDoms = `<script src="https://unpkg.com/vconsole@v3.14.6/dist/vconsole.min.js"></script>
+  let scriptDoms = `<script src="https://unpkg.com/vconsole@3.14.6/dist/vconsole.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.1/js.cookie.min.js"></script>`;
 
   let mitmFixContent = `<script>
@@ -517,14 +517,6 @@ try {
                   console.count('seckill');
                 }
               }, 600);
-
-              document.addEventListener('click', function (e) {
-                const $dom = e.target;
-                if ($dom.className.includes('vc-log-val')) {
-                  // console.log($dom.outerText);
-                  _id77_copyText($dom.outerText);
-                }
-              });
             }
             },3000);
           }
