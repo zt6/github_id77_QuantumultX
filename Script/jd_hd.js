@@ -41,16 +41,23 @@ if (modifiedHeaders['Content-Security-Policy'])
 if (modifiedHeaders['X-XSS-Protection'])
   delete modifiedHeaders['X-XSS-Protection'];
 
-if ($response.headers['Set-Cookie']) {
-  const cookies = $response.headers['Set-Cookie']
+let key = 'Set-Cookie';
+let cookies = $response.headers[key];
+if (!cookies) {
+  key = 'set-cookie';
+  cookies = $response.headers[key];
+}
+if (cookies) {
+  cookies
     .replace(/HttpOnly/gi, '')
     .replace(/(Expires=.+?),/gi, '$1@')
     .split(', ');
 
-  let key = 'Set-Cookie';
+  let _key = key;
   cookies.forEach((ck, i) => {
-    key += ' ';
-    modifiedHeaders[key] = ck.replace(/@/g, ',');
+    // 利用空格设置多个 set-cookie
+    _key += ' ';
+    modifiedHeaders[_key] = ck.replace(/@/g, ',');
   });
 }
 
