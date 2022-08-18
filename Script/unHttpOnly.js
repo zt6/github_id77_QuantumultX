@@ -8,7 +8,7 @@ if (!cookies) {
   cookies = $response.headers[key];
 }
 if (cookies) {
-  cookies
+  cookies = cookies
     .replace(/HttpOnly/gi, '')
     .replace(/(Expires=.+?),/gi, '$1@')
     .split(', ');
