@@ -422,7 +422,7 @@ function setReqOpts(method, _360buy_param_json) {
 
 function setScheme(url) {
   const params = encodeURIComponent(
-    `{"category":"jump","des":"m","keplerID":"jd20170713smzdm","url":"${url}"}`
+    `{"category":"jump","des":"m","url":"${url}"}`
   );
 
   if (appType === 'jdapp') {
