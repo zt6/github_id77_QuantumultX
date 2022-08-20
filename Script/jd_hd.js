@@ -312,7 +312,7 @@ try {
       sessionStorage.clear();
       localStorage.clear();
 
-      const domains = [_id77_domain.replace(/.*?([^\/]+\.[^.]+)$/, '$1'), (_id77_domain.match(/[^.]+\.(com.cn|net.cn|org.cn|gov.cn|edu.cn)$/) || [''])[0] || _id77_domain.replace(/.*?([^.]+\.[^.]+)$/, '$1')];
+      const domains = [_id77_domain.match(/.*?([^\/]+\.[^.]+)$/)?.[1]??'', _id77_domain.match(/[^.]+\.(com.cn|net.cn|org.cn|gov.cn|edu.cn)$/)?.[0] || (_id77_domain.match(/.*?([^\.]+.[^.]+)$/)?.[1]??'')];
 
       Object.keys(Cookies.get()).forEach(function (cookieName) {
         Cookies.remove(cookieName, {
@@ -335,8 +335,7 @@ try {
     
     function _id77_setCookie(cookie) {
 
-      const domain =
-        (_id77_domain.match(/[^.]+\.(com.cn|net.cn|org.cn|gov.cn|edu.cn)$/) || [''])[0] || _id77_domain.replace(/.*?([^.]+\.[^.]+)$/, '$1');
+      const domain = _id77_domain.match(/[^.]+\.(com.cn|net.cn|org.cn|gov.cn|edu.cn)$/)?.[0] || (_id77_domain.match(/.*?([^\.]+.[^.]+)$/)?.[1]??'');
 
       const other = { 
         path: '/',
