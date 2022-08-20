@@ -338,7 +338,7 @@ try {
 
       const other = { 
         path: '/',
-        expires: 30,
+        expires: 8/24,
         // SameSite: 'Strict',
         // secure: true
       };
