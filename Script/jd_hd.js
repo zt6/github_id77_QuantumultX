@@ -291,6 +291,7 @@ try {
     const _id77_cookies_tool = Cookies;
     const _id77_domain = window.location.origin;
     const _id77_currentPin = _id77_cookies_tool.get('pt_pin');
+    const _id77_currentKey = _id77_cookies_tool.get('pt_key');
     const _id77_needHideSwitch = localStorage.getItem('vConsole_switch_hide') === 'Y';
 
     const _id77_cookies = ${JSON.stringify(cookies)};
@@ -300,9 +301,10 @@ try {
       // console.log('_id77_currentPin', encodeURI(_id77_currentPin));
       for (const ck of _id77_cookies) {
         const _pin = ck.match(/pt_pin=(.+?);/)[1];
+        const _key = ck.match(/pt_key=(.+?);/)[1];
         // console.log('_pin', _pin);
         
-        if(_pin === encodeURI(_id77_currentPin)) {
+        if(_id77_currentKey && _pin === encodeURI(_id77_currentPin) && _key !== _id77_currentKey) {
           _id77_setCookie(ck);
           console.log('已同步 cookie');
         }
