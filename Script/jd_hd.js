@@ -296,7 +296,7 @@ try {
     const _id77_cookies = ${JSON.stringify(cookies)};
 
     // ck同步最新
-    if(_id77_currentPin) {
+    if(_id77_currentPin && !"${url}".includes('/login')) {
       // console.log('_id77_currentPin', encodeURI(_id77_currentPin));
       for (const ck of _id77_cookies) {
         const _pin = ck.match(/pt_pin=(.+?);/)[1];
