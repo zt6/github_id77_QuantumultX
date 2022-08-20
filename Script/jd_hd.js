@@ -288,8 +288,9 @@ try {
     }
   </style>
   <script>
+    const _id77_cookies_tool = Cookies;
     const _id77_domain = window.location.origin;
-    const _id77_currentPin = Cookies.get('pt_pin');
+    const _id77_currentPin = _id77_cookies_tool.get('pt_pin');
     const _id77_needHideSwitch = localStorage.getItem('vConsole_switch_hide') === 'Y';
 
     const _id77_cookies = ${JSON.stringify(cookies)};
@@ -314,16 +315,16 @@ try {
 
       const domains = [_id77_domain.match(/.*?([^\/]+\.[^.]+)\$/)?.[1]??'', _id77_domain.match(/[^.]+\.(com.cn|net.cn|org.cn|gov.cn|edu.cn)$/)?.[0] || (_id77_domain.match(/.*?([^\.]+.[^.]+)\$/)?.[1]??'')];
 
-      Object.keys(Cookies.get()).forEach(function (cookieName) {
-        Cookies.remove(cookieName, {
+      Object.keys(_id77_cookies_tool.get()).forEach(function (cookieName) {
+        _id77_cookies_tool.remove(cookieName, {
           expires: 'Thu, 01 Jan 1970 00:00:00 GMT',
         });
-        Cookies.remove(cookieName, {
+        _id77_cookies_tool.remove(cookieName, {
           path: '/',
           expires: 'Thu, 01 Jan 1970 00:00:00 GMT',
         });
         for (let j = domains.length - 1; j >= 0; j--) {
-          Cookies.remove(cookieName, {
+          _id77_cookies_tool.remove(cookieName, {
             domain: '.' + domains[j],
             path: '/',
             expires: 'Thu, 01 Jan 1970 00:00:00 GMT',
@@ -345,8 +346,8 @@ try {
         domain
       };
       
-      Cookies.set('pt_key', cookie.match(/pt_key=(.+?);/)[1], other);
-      Cookies.set('pt_pin', decodeURI(cookie.match(/pt_pin=(.+?);/)[1]), other);
+      _id77_cookies_tool.set('pt_key', cookie.match(/pt_key=(.+?);/)[1], other);
+      _id77_cookies_tool.set('pt_pin', decodeURI(cookie.match(/pt_pin=(.+?);/)[1]), other);
 
     }
 
