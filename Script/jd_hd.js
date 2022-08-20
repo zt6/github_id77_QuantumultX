@@ -348,7 +348,6 @@ try {
       
       Cookies.set('pt_key', cookie.match(/pt_key=(.+?);/)[1], other);
       Cookies.set('pt_pin', decodeURI(cookie.match(/pt_pin=(.+?);/)[1]), other);
-      }
 
     }
 
