@@ -288,6 +288,7 @@ try {
     }
   </style>
   <script>
+    const _id77_domain = window.location.origin;
     const _id77_currentPin = Cookies.get('pt_pin');
     const _id77_needHideSwitch = localStorage.getItem('vConsole_switch_hide') === 'Y';
 
@@ -311,10 +312,9 @@ try {
       sessionStorage.clear();
       localStorage.clear();
 
-      const uris = window.location.hostname.split('.');
+      const domains = [_id77_domain.replace(/.*?([^\/]+\.[^.]+)$/, '$1'), (_id77_domain.match(/[^.]+\.(com.cn|net.cn|org.cn|gov.cn|edu.cn)$/) || [''])[0] || _id77_domain.replace(/.*?([^.]+\.[^.]+)$/, '$1')];
 
       Object.keys(Cookies.get()).forEach(function (cookieName) {
-        let uri = '.' + uris[uris.length - 1];
         Cookies.remove(cookieName, {
           expires: 'Thu, 01 Jan 1970 00:00:00 GMT',
         });
@@ -322,10 +322,9 @@ try {
           path: '/',
           expires: 'Thu, 01 Jan 1970 00:00:00 GMT',
         });
-        for (let j = uris.length - 2; j >= 0; j--) {
-          uri = '.' + uris[j] + uri;
+        for (let j = domains.length - 1; j >= 0; j--) {
           Cookies.remove(cookieName, {
-            domain: uri,
+            domain: '.' + domains[j],
             path: '/',
             expires: 'Thu, 01 Jan 1970 00:00:00 GMT',
           });
@@ -336,26 +335,19 @@ try {
     
     function _id77_setCookie(cookie) {
 
+      const domain =
+        (_id77_domain.match(/[^.]+\.(com.cn|net.cn|org.cn|gov.cn|edu.cn)$/) || [''])[0] || _id77_domain.replace(/.*?([^.]+\.[^.]+)$/, '$1');
+
       const other = { 
         path: '/',
         expires: 8/24,
         // SameSite: 'Strict',
         // secure: true
+        domain
       };
-
-      const domains = [
-        ".jd.com",
-        ".jd.hk",
-        ".jingxi.com"
-      ];
-
-      for (let l = 0; l < domains.length; l++) {
-
-        other.domain = domains[l];
-        
-        Cookies.set('pt_key', cookie.match(/pt_key=(.+?);/)[1], other);
-        Cookies.set('pt_pin', decodeURI(cookie.match(/pt_pin=(.+?);/)[1]), other);
-
+      
+      Cookies.set('pt_key', cookie.match(/pt_key=(.+?);/)[1], other);
+      Cookies.set('pt_pin', decodeURI(cookie.match(/pt_pin=(.+?);/)[1]), other);
       }
 
     }
