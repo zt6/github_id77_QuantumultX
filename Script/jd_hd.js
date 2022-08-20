@@ -312,7 +312,7 @@ try {
       sessionStorage.clear();
       localStorage.clear();
 
-      const domains = [_id77_domain.match(/.*?([^\/]+\.[^.]+)$/)?.[1]??'', _id77_domain.match(/[^.]+\.(com.cn|net.cn|org.cn|gov.cn|edu.cn)$/)?.[0] || (_id77_domain.match(/.*?([^\.]+.[^.]+)$/)?.[1]??'')];
+      const domains = [_id77_domain.match(/.*?([^\/]+\.[^.]+)\$/)?.[1]??'', _id77_domain.match(/[^.]+\.(com.cn|net.cn|org.cn|gov.cn|edu.cn)$/)?.[0] || (_id77_domain.match(/.*?([^\.]+.[^.]+)\$/)?.[1]??'')];
 
       Object.keys(Cookies.get()).forEach(function (cookieName) {
         Cookies.remove(cookieName, {
@@ -335,7 +335,7 @@ try {
     
     function _id77_setCookie(cookie) {
 
-      const domain = _id77_domain.match(/[^.]+\.(com.cn|net.cn|org.cn|gov.cn|edu.cn)$/)?.[0] || (_id77_domain.match(/.*?([^\.]+.[^.]+)$/)?.[1]??'');
+      const domain = _id77_domain.match(/[^.]+\.(com.cn|net.cn|org.cn|gov.cn|edu.cn)\$/)?.[0] || (_id77_domain.match(/.*?([^\.]+.[^.]+)\$/)?.[1]??'');
 
       const other = { 
         path: '/',
@@ -390,8 +390,8 @@ try {
     }
 
     function _id77_changeBtns() {
-      const $btns = document.querySelectorAll('._id77_btn');
-      Array.prototype.forEach.call($btns, function(el, i){
+      const \$btns = document.querySelectorAll('._id77_btn');
+      Array.prototype.forEach.call(\$btns, function(el, i){
         if (el.classList.contains('_id77_hide')){
           el.classList.remove('_id77_hide');
         } else {
@@ -401,8 +401,8 @@ try {
     }
 
     function _id77_changeTabs() {
-      const $tabs = document.querySelectorAll('.vc-tab');
-      Array.prototype.forEach.call($tabs, function(el, i){
+      const \$tabs = document.querySelectorAll('.vc-tab');
+      Array.prototype.forEach.call(\$tabs, function(el, i){
         if (i === 0 || i === 2 || i > 3) return;
         if (el.classList.contains('_id77_hide')){
           el.classList.remove('_id77_hide');
@@ -461,20 +461,20 @@ try {
         __showCouponLink = false;
         function showCouponLink() {
            if (__showCouponLink) return;
-           const $jdCouponDoms = document.querySelectorAll('div[roleid]');
-            if ($jdCouponDoms.length > 0) {
-              Array.prototype.forEach.call($jdCouponDoms, function(el, i){
+           const \$jdCouponDoms = document.querySelectorAll('div[roleid]');
+            if (\$jdCouponDoms.length > 0) {
+              Array.prototype.forEach.call(\$jdCouponDoms, function(el, i){
                   el.insertAdjacentElement('afterend', createDom('https://coupon.m.jd.com/coupons/show.action?key='+ el.getAttribute("key") + '&roleId=' + el.getAttribute("roleid")));
               });
               __showCouponLink = true;
             }
 
-            const $jdlifeCouponDoms = document.querySelectorAll('.prodFavorableInfo-wrap-couponitem');
-            if ($jdlifeCouponDoms.length > 0) {
-              Array.prototype.forEach.call($jdlifeCouponDoms, function(el, i){
-                  const $dom = el.querySelector('div[data-roleid]')
-                  if ($dom)
-                    el.insertAdjacentElement('afterend', createDom('https://coupon.m.jd.com/coupons/show.action?key='+ $dom.getAttribute("data-encryptedkey") + '&roleId=' + $dom.getAttribute("data-roleid")));
+            const \$jdlifeCouponDoms = document.querySelectorAll('.prodFavorableInfo-wrap-couponitem');
+            if (\$jdlifeCouponDoms.length > 0) {
+              Array.prototype.forEach.call(\$jdlifeCouponDoms, function(el, i){
+                  const \$dom = el.querySelector('div[data-roleid]')
+                  if (\$dom)
+                    el.insertAdjacentElement('afterend', createDom('https://coupon.m.jd.com/coupons/show.action?key='+ \$dom.getAttribute("data-encryptedkey") + '&roleId=' + \$dom.getAttribute("data-roleid")));
               });
               __showCouponLink = true;
             }
@@ -486,13 +486,13 @@ try {
             showCouponLink();
         })
 
-        const $fPromoComb = document.querySelector('#fPromoComb');
-        if ($fPromoComb) {
-           $fPromoComb.addEventListener('click', (e) => {
-            const $jxCouponDoms = document.querySelectorAll('.jxcoupon-item');
-            if ($jxCouponDoms.length > 0 && window._ITEM_DATA && _ITEM_DATA.floors) {
+        const \$fPromoComb = document.querySelector('#fPromoComb');
+        if (\$fPromoComb) {
+           \$fPromoComb.addEventListener('click', (e) => {
+            const \$jxCouponDoms = document.querySelectorAll('.jxcoupon-item');
+            if (\$jxCouponDoms.length > 0 && window._ITEM_DATA && _ITEM_DATA.floors) {
               const couponInfo = _ITEM_DATA.floors.filter(o => o.fId === 'fPromoComb')[0].fData.coupon.couponInfo;
-              Array.prototype.forEach.call($jxCouponDoms, function(el, i){
+              Array.prototype.forEach.call(\$jxCouponDoms, function(el, i){
                   el.insertAdjacentElement('afterend', createDom('https://coupon.m.jd.com/coupons/show.action?key='+ couponInfo[i].encryptedKey + '&roleId=' + couponInfo[i].roleId));
               });
               __showCouponLink = true;
@@ -506,11 +506,11 @@ try {
               console.info(window.location.href);
               if (${$.seckill}) {
               console.log('#seckill');
-              let $seckillSubDom;
+              let \$seckillSubDom;
               setInterval(() => { 
-                if (!$seckillSubDom) $seckillSubDom = document.querySelector('button.submit-btn');
-                if($seckillSubDom) {
-                  $seckillSubDom.click();
+                if (!\$seckillSubDom) \$seckillSubDom = document.querySelector('button.submit-btn');
+                if(\$seckillSubDom) {
+                  \$seckillSubDom.click();
                   console.count('seckill');
                 }
               }, 600);
@@ -586,8 +586,8 @@ try {
         
         JDCKPlugin.on('ready', function() {
           if (!_id77_needHideSwitch) {
-            const $btns = document.querySelectorAll('._id77_btn');
-            Array.prototype.forEach.call($btns, function(el, i){
+            const \$btns = document.querySelectorAll('._id77_btn');
+            Array.prototype.forEach.call(\$btns, function(el, i){
               el.classList.remove('_id77_hide');
             });
           }
