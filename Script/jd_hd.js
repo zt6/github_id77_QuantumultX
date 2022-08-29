@@ -33,6 +33,14 @@ $.domainWhitelist.forEach((item) => {
   }
 });
 
+function randomInteger(min, max) {
+  // now rand is from  (min-0.5) to (max+0.5)
+  let rand = min - 0.5 + Math.random() * (max - min + 1);
+  return Math.round(rand);
+}
+
+let prefix = randomInteger(777, 7777);
+
 let html = $response.body || '';
 // console.log(`html:${html}`);
 let modifiedHeaders = { ...$response.headers };
@@ -102,7 +110,7 @@ try {
       const pin = decodeURI(cookie.match(/pt_pin=(.+?);/)[1]);
       cookieListDom += `<li data-cookie-index="${
         index + 1
-      }" id="_${pin}" class="_id77_cookieDom" onclick="_id77_changeCookie('${cookie}')">${pin}</li>`;
+      }" id="_${pin}" class="_${prefix}_id77_cookieDom" onclick="_${prefix}_id77_changeCookie('${cookie}')">${pin}</li>`;
     }
   }
   cookieListDom += `</ul>`;
@@ -111,15 +119,15 @@ try {
   if (cookies.length > 0) {
     tools =
       `
-    <div id="_id77_btns">
-      <div id="cks" class="_id77_btn _id77_hide"></div>
-      <div id="nextCookie" class="_id77_btn _id77_hide"></div>
-      <div id="Foxok" class="_id77_btn _id77_hide" onclick="window.location.href='Foxok://url?${url}'">
+    <div id="_${prefix}_id77_btns">
+      <div id="cks" class="_${prefix}_id77_btn _${prefix}_id77_hide"></div>
+      <div id="nextCookie" class="_${prefix}_id77_btn _${prefix}_id77_hide"></div>
+      <div id="Foxok" class="_${prefix}_id77_btn _${prefix}_id77_hide" onclick="window.location.href='Foxok://url?${url}'">
         <img src="data:image/jpg;base64,_9j_4AAQSkZJRgABAQAAAQABAAD_2wBDAAMCAgMCAgMDAgMDAwMDBAcFBAQEBAkGBwUHCgkLCwoJCgoMDREODAwQDAoKDhQPEBESExMTCw4UFhQSFhESExL_2wBDAQMDAwQEBAgFBQgSDAoMEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhL_wgARCAAgACADAREAAhEBAxEB_8QAGQABAQADAQAAAAAAAAAAAAAABwYCBAUJ_8QAGwEBAAIDAQEAAAAAAAAAAAAABgUHAAMEAQL_2gAMAwEAAhADEAAAAPUrX9CwB93Mj1CwCEEWRBNeWLryGNioLny-j1ftatBA0s5wrj8SXil1VvhaZbFf_8QAKxAAAgEDAgUDAwUAAAAAAAAAAQIDBAURAAYHEhMhQQgUMRWBkRYjU3Fy_9oACAEBAAE_AKmpiooJJ6p1hhhUu7scBQPJ1evU5bI62Sn2rb5rtGhx7pn6UT_5-Sf7xjW1uOVPeZUivNvkoOfsJUfqJ9_I1DMs8QeFlZGAKsDkEa4q7jpbZDRWy7wJPa7v1Irgr_wkcpP5YHVbw_k2LKKOjt1FuC41DFqf3dQUgSDJEZ5R3lkfGcdgNbM4xWutqb9ZazaNsg3Ft2n91NCHeNHiEnJKMdyrISp8ghhrgnxHO9o7lRPbYbYbWUMccMzSKyNnywGO4OuOFjlrrNT10CFxQsRKAM4RvOqXcdO89qku9xFBWWX9tJanPSnhByoLjPJIh-Ccgj8iu2Lt_btmvFx25a7RBdt5AT19ZR0vJJOhYuWdj3JZiTr09bSls9DdbpVIU-oyqkAPmNM9_uSdSwR1MTxzqrxuMMpGQRq6-n-y118grIJ5oKRJhJNREBkkAOeUZ7ga_Q8VXWvPdZuurHtEowoHwBqKFKeJY4UCIigKq9gANf_EACMRAAIBBAICAgMAAAAAAAAAAAIDAQAEERIFBjFhEyEyQVH_2gAIAQIBAT8AacKDaZ-orku_ISz40Dt7rje-JeWrR190toNiJCcxXY-TVbmtDPxPOafxVrZOwQ7kfj1TEWltbkw7fJD7rqPNjerJYL11913mwY1AvH71pN4NzKxNmph4nHmuw35ospURbGddB41iLcmsjG1MWDQmJjMTTek203cOCcR_KLqKHXcveW0_qKUqFBgY8V__xAAjEQABAwMEAwEBAAAAAAAAAAACAAEDBAUSBhEhMRMiQUJh_9oACAEDAQE_AAjczYBbdUOgqmSLyTlhv8Vw0jLTs_jLJOOD4krDQyTZzRv7Bs7KC9lc-ZJPGA98fVddPzxvEYVWUcnT7MtU2B7Y4k55MS0lWRRVJRSPwSqLcYNJ4AyA-_4rfWzz1QRyl6x9LWlzaolCFvygNwLce2VPrGsjpShfl3-oboYhsHDoycn3J-V__9k" />
       </div>` +
       (!sku
         ? ``
-        : `<button id="smzdm" class="_id77_btn _id77_hide"></button><button id="manmanbuy" class="_id77_btn _id77_hide"></button>`) +
+        : `<button id="smzdm" class="_${prefix}_id77_btn _${prefix}_id77_hide"></button><button id="manmanbuy" class="_${prefix}_id77_btn _${prefix}_id77_hide"></button>`) +
       `</div>`;
   }
 
@@ -131,11 +139,11 @@ try {
     if(window.sessionStorage) {
       window.sessionStorageCopy = window.sessionStorage
     }
-    const _id77_Map = Map;
+    const _${prefix}_id77_Map = Map;
   </script>`;
 
   let mitmFuckEid = `<script>
-   function _id77_upsetArr(arr){
+   function _${prefix}_id77_upsetArr(arr){
       return arr.sort(function(){ return Math.random() - 0.5});
     }
 
@@ -152,7 +160,7 @@ try {
         if (appEid) {
           Storage_setItem.apply(this, [
             key,
-            'eidif' + _id77_upsetArr(appEid.split('')).join(''),
+            'eidif' + _${prefix}_id77_upsetArr(appEid.split('')).join(''),
           ]);
         }
       } else {
@@ -166,7 +174,7 @@ try {
   <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.1/js.cookie.min.js"></script>`;
 
   let mitmFixContent = `<script>
-    if (Map !== _id77_Map) {
+    if (Map !== _${prefix}_id77_Map) {
       // 兼容保价页面
       if(!Map.prototype.set &&((Map.toString && Map.toString()) || '').includes('this.elements')){
         Map.prototype.set = function(_key, _value) { 
@@ -212,7 +220,7 @@ try {
     body > a {
         display: inline-block !important;
     }
-    .vc-tab._id77_hide {
+    .vc-tab._${prefix}_id77_hide {
       display: none !important;
     }
     * {
@@ -246,7 +254,7 @@ try {
     .vc-panel {
       z-index: 100000 !important;
     }
-    ._id77_btn {
+    ._${prefix}_id77_btn {
       position: fixed;
       right: 0;
       z-index: 99999;
@@ -260,7 +268,7 @@ try {
       background-size: 80%;
       overflow: hidden;
     }
-    ._id77_btn img {
+    ._${prefix}_id77_btn img {
       box-sizing: content-box;
       max-width: 2.1429em !important;
       width: 2.1429em !important;
@@ -280,53 +288,54 @@ try {
       border: 0.0714em solid #ccc;
       padding: 0.3571em;
     }
-    #_id77_btns { 
+    #_${prefix}_id77_btns { 
       font-size: 14px;
     }
-    ._id77_btn._id77_hide {
+    ._${prefix}_id77_btn._${prefix}_id77_hide {
       display: none !important;
     }
   </style>
   <script>
-    const _id77_cookies_tool = Cookies;
-    const _id77_domain = window.location.origin;
-    const _id77_currentPin = _id77_cookies_tool.get('pt_pin');
-    const _id77_currentKey = _id77_cookies_tool.get('pt_key');
-    const _id77_needHideSwitch = localStorage.getItem('vConsole_switch_hide') === 'Y';
+    const _${prefix}_id77_cookies_tool = Cookies;
+    const _${prefix}_id77_domain = window.location.origin;
+    const _${prefix}_id77_currentPin = _${prefix}_id77_cookies_tool.get('pt_pin');
+    const _${prefix}_id77_currentKey = _${prefix}_id77_cookies_tool.get('pt_key');
+    const _${prefix}_id77_needHideSwitch = localStorage.getItem('vConsole_switch_hide') === 'Y';
+    const _${prefix}_id77_btnsDom = \`${tools}\`;
 
-    const _id77_cookies = ${JSON.stringify(cookies)};
+    const _${prefix}_id77_cookies = ${JSON.stringify(cookies)};
 
     // ck同步最新
-    if(_id77_currentPin && !"${url}".includes('/login')) {
-      // console.log('_id77_currentPin', encodeURI(_id77_currentPin));
-      for (const ck of _id77_cookies) {
+    if(_${prefix}_id77_currentPin && !"${url}".includes('/login')) {
+      // console.log('_${prefix}_id77_currentPin', encodeURI(_${prefix}_id77_currentPin));
+      for (const ck of _${prefix}_id77_cookies) {
         const _pin = ck.match(/pt_pin=(.+?);/)[1];
         const _key = ck.match(/pt_key=(.+?);/)[1];
         // console.log('_pin', _pin);
         
-        if(_id77_currentKey && _pin === encodeURI(_id77_currentPin) && _key !== _id77_currentKey) {
-          _id77_setCookie(ck);
+        if(_${prefix}_id77_currentKey && _pin === encodeURI(_${prefix}_id77_currentPin) && _key !== _${prefix}_id77_currentKey) {
+          _${prefix}_id77_setCookie(ck);
           console.log('已同步 cookie');
         }
       }
     }
 
-    function _id77_clearData() {
+    function _${prefix}_id77_clearData() {
       sessionStorage.clear();
       localStorage.clear();
 
-      const domains = [_id77_domain.match(/.*?([^\/]+\.[^.]+)\$/)?.[1]??'', _id77_domain.match(/[^.]+\.(com.cn|net.cn|org.cn|gov.cn|edu.cn)$/)?.[0] || (_id77_domain.match(/.*?([^\.]+.[^.]+)\$/)?.[1]??'')];
+      const domains = [_${prefix}_id77_domain.match(/.*?([^\/]+\.[^.]+)\$/)?.[1]??'', _${prefix}_id77_domain.match(/[^.]+\.(com.cn|net.cn|org.cn|gov.cn|edu.cn)$/)?.[0] || (_${prefix}_id77_domain.match(/.*?([^\.]+.[^.]+)\$/)?.[1]??'')];
 
-      Object.keys(_id77_cookies_tool.get()).forEach(function (cookieName) {
-        _id77_cookies_tool.remove(cookieName, {
+      Object.keys(_${prefix}_id77_cookies_tool.get()).forEach(function (cookieName) {
+        _${prefix}_id77_cookies_tool.remove(cookieName, {
           expires: 'Thu, 01 Jan 1970 00:00:00 GMT',
         });
-        _id77_cookies_tool.remove(cookieName, {
+        _${prefix}_id77_cookies_tool.remove(cookieName, {
           path: '/',
           expires: 'Thu, 01 Jan 1970 00:00:00 GMT',
         });
         for (let j = domains.length - 1; j >= 0; j--) {
-          _id77_cookies_tool.remove(cookieName, {
+          _${prefix}_id77_cookies_tool.remove(cookieName, {
             domain: '.' + domains[j],
             path: '/',
             expires: 'Thu, 01 Jan 1970 00:00:00 GMT',
@@ -336,9 +345,9 @@ try {
 
     }
     
-    function _id77_setCookie(cookie) {
+    function _${prefix}_id77_setCookie(cookie) {
 
-      const domain = _id77_domain.match(/[^.]+\.(com.cn|net.cn|org.cn|gov.cn|edu.cn)\$/)?.[0] || (_id77_domain.match(/.*?([^\.]+.[^.]+)\$/)?.[1]??'');
+      const domain = _${prefix}_id77_domain.match(/[^.]+\.(com.cn|net.cn|org.cn|gov.cn|edu.cn)\$/)?.[0] || (_${prefix}_id77_domain.match(/.*?([^\.]+.[^.]+)\$/)?.[1]??'');
 
       const other = { 
         path: '/',
@@ -348,24 +357,24 @@ try {
         domain
       };
       
-      _id77_cookies_tool.set('pt_key', cookie.match(/pt_key=(.+?);/)[1], other);
-      _id77_cookies_tool.set('pt_pin', decodeURI(cookie.match(/pt_pin=(.+?);/)[1]), other);
+      _${prefix}_id77_cookies_tool.set('pt_key', cookie.match(/pt_key=(.+?);/)[1], other);
+      _${prefix}_id77_cookies_tool.set('pt_pin', decodeURI(cookie.match(/pt_pin=(.+?);/)[1]), other);
 
     }
 
-    function _id77_changeCookie(cookie){
-      _id77_clearData();
-      _id77_setCookie(cookie);
+    function _${prefix}_id77_changeCookie(cookie){
+      _${prefix}_id77_clearData();
+      _${prefix}_id77_setCookie(cookie);
       window.location.reload();
     }
 
-    function _id77_nextCookie() {
-      const cookieDomList = document.querySelectorAll("._id77_cookieDom"); 
-      const cookieDom = document.querySelector("#_" + _id77_currentPin);
+    function _${prefix}_id77_nextCookie() {
+      const cookieDomList = document.querySelectorAll("._${prefix}_id77_cookieDom"); 
+      const cookieDom = document.querySelector("#_" + _${prefix}_id77_currentPin);
 
       const index = [].indexOf.call(cookieDomList, cookieDom);
 
-      _id77_changeCookie(_id77_cookies[index + 1]);
+      _${prefix}_id77_changeCookie(_${prefix}_id77_cookies[index + 1]);
     }
 
     // const _script = document.createElement('script');
@@ -376,9 +385,9 @@ try {
       
     // };
 
-    _id77_onReady(_id77_init);
+    _${prefix}_id77_onReady(_${prefix}_id77_init);
 
-    function _id77_onReady(fn){
+    function _${prefix}_id77_onReady(fn){
       try {
         const readyState = document.readyState;
         if(readyState === 'interactive' || readyState === 'complete') {
@@ -392,59 +401,61 @@ try {
       }
     }
 
-    function _id77_changeBtns() {
-      const \$btns = document.querySelectorAll('._id77_btn');
+    function _${prefix}_id77_changeBtns() {
+      const \$btns = document.querySelectorAll('._${prefix}_id77_btn');
       Array.prototype.forEach.call(\$btns, function(el, i){
-        if (el.classList.contains('_id77_hide')){
-          el.classList.remove('_id77_hide');
+        if (el.classList.contains('_${prefix}_id77_hide')){
+          el.classList.remove('_${prefix}_id77_hide');
         } else {
-          el.classList.add('_id77_hide');
+          el.classList.add('_${prefix}_id77_hide');
         }
       });
     }
 
-    function _id77_changeTabs() {
+    function _${prefix}_id77_changeTabs() {
       const \$tabs = document.querySelectorAll('.vc-tab');
       Array.prototype.forEach.call(\$tabs, function(el, i){
         if (i === 0 || i === 2 || i > 3) return;
-        if (el.classList.contains('_id77_hide')){
-          el.classList.remove('_id77_hide');
+        if (el.classList.contains('_${prefix}_id77_hide')){
+          el.classList.remove('_${prefix}_id77_hide');
         } else {
-          el.classList.add('_id77_hide');
+          el.classList.add('_${prefix}_id77_hide');
         }
       });
     }
 
-    function _id77_changeMitmUI() {
+    function _${prefix}_id77_changeMitmUI() {
       const vcSwitch = document.querySelector('.vc-switch');
       if (vcSwitch.style.display == 'none') {
-         _id77_vConsole.showSwitch();
+         _${prefix}_id77_vConsole.showSwitch();
         localStorage.setItem('vConsole_switch_hide', 'N')
       } else {
-         _id77_vConsole.hideSwitch();
+         _${prefix}_id77_vConsole.hideSwitch();
         localStorage.setItem('vConsole_switch_hide', 'Y')
       }
 
-      if (_id77_cookies.length > 0) _id77_changeBtns();
+      if (_${prefix}_id77_cookies.length > 0) _${prefix}_id77_changeBtns();
     }
     
     document.addEventListener('dblclick', function (e) {
-      _id77_changeMitmUI();
+      _${prefix}_id77_changeMitmUI();
     });
     
-    function _id77_init () {
-      const _id77_btnIDs = [
+    function _${prefix}_id77_init () {
+      document.querySelector('body').insertAdjacentHTML('beforeend', _${prefix}_id77_btnsDom);
+
+      const _${prefix}_id77_btnIDs = [
         'smzdm',
         'manmanbuy',
       ];
       
-      if (_id77_btnIDs.length > 0) {
-        for (const _btnID of _id77_btnIDs) {
+      if (_${prefix}_id77_btnIDs.length > 0) {
+        for (const _btnID of _${prefix}_id77_btnIDs) {
           const _btn = document.querySelector('#' + _btnID);
 
           if (_btn) {
             _btn.addEventListener('click',() => {
-              _id77_copyText('https://item.jd.com/${sku}.html?' + Math.random());
+              _${prefix}_id77_copyText('https://item.jd.com/${sku}.html?' + Math.random());
               window.location.href= _btnID + '://';
             })
           }
@@ -502,7 +513,7 @@ try {
             }
           })
         }
-        const  _id77_vConsoleOptions = {
+        const  _${prefix}_id77_vConsoleOptions = {
           onReady: () => {
             setTimeout(() => {
               console.log("初始化成功");
@@ -522,10 +533,10 @@ try {
           }
         }
 
-        Map = _id77_Map;
-        window._id77_vConsole = new VConsole(_id77_vConsoleOptions);
-        if (_id77_needHideSwitch) {
-           _id77_vConsole.hideSwitch(); 
+        Map = _${prefix}_id77_Map;
+        window._${prefix}_id77_vConsole = new VConsole(_${prefix}_id77_vConsoleOptions);
+        if (_${prefix}_id77_needHideSwitch) {
+           _${prefix}_id77_vConsole.hideSwitch(); 
         }
   
         const JDCKPlugin = new VConsole.VConsolePlugin("jd_cookie", "京东CK");
@@ -545,8 +556,8 @@ try {
             name: "显隐图标",
             global: false,
             onClick: function (event) {
-              _id77_vConsole.hide();
-              _id77_changeBtns();
+              _${prefix}_id77_vConsole.hide();
+              _${prefix}_id77_changeBtns();
             },
           });
   
@@ -554,7 +565,7 @@ try {
             name: "其他工具",
             global: true,
             onClick: function (event) {
-              _id77_changeTabs();
+              _${prefix}_id77_changeTabs();
             },
           });
 
@@ -563,24 +574,24 @@ try {
             global: true,
             onClick: function (event) {
               setInterval(() => document.querySelector('button.submit-btn').click(), 600);
-              _id77_vConsole.hide();
+              _${prefix}_id77_vConsole.hide();
             },
           });
   
           const cksDom = document.querySelector('#cks');
           cksDom.addEventListener('click', (e) => {
-             _id77_vConsole.show();
-             _id77_vConsole.showPlugin("jd_cookie");
+             _${prefix}_id77_vConsole.show();
+             _${prefix}_id77_vConsole.showPlugin("jd_cookie");
             e.stopPropagation();
           })
           cksDom.addEventListener('dblclick', function (e) {
-            _id77_changeCookie(_id77_cookies[0]);
+            _${prefix}_id77_changeCookie(_${prefix}_id77_cookies[0]);
             e.stopPropagation();
           });
   
           const nextCookieDom = document.querySelector('#nextCookie');
           nextCookieDom.addEventListener('click', (e) => {
-            _id77_nextCookie();
+            _${prefix}_id77_nextCookie();
             e.stopPropagation();
           })
           
@@ -588,22 +599,22 @@ try {
         });
         
         JDCKPlugin.on('ready', function() {
-          if (!_id77_needHideSwitch) {
-            const \$btns = document.querySelectorAll('._id77_btn');
+          if (!_${prefix}_id77_needHideSwitch) {
+            const \$btns = document.querySelectorAll('._${prefix}_id77_btn');
             Array.prototype.forEach.call(\$btns, function(el, i){
-              el.classList.remove('_id77_hide');
+              el.classList.remove('_${prefix}_id77_hide');
             });
           }
   
           const fontSize = document.querySelector('#__vconsole').style.fontSize;
   
           if(fontSize) {
-            document.querySelector('#_id77_btns').style.fontSize = fontSize;
+            document.querySelector('#_${prefix}_id77_btns').style.fontSize = fontSize;
           }
   
-          const _currentCKDom = document.querySelector("#_" + _id77_currentPin);
+          const _currentCKDom = document.querySelector("#_" + _${prefix}_id77_currentPin);
   
-          if (_id77_currentPin && _currentCKDom) {
+          if (_${prefix}_id77_currentPin && _currentCKDom) {
             setTimeout(() => {
               _currentCKDom.style.background = '#238636';
             });
@@ -614,7 +625,7 @@ try {
         function scrollTopToCKDom(reset) {
           const fontSize = document.querySelector('#__vconsole').style.fontSize;
   
-          const _currentCKDom = document.querySelector("#_" + _id77_currentPin);
+          const _currentCKDom = document.querySelector("#_" + _${prefix}_id77_currentPin);
           const _VCcontext = document.querySelector('.vc-content');
   
           if (reset) {
@@ -647,14 +658,14 @@ try {
         JDCKPlugin.on('hideConsole', () => scrollTopToCKDom(true));
   
         if (${$.isNeedToolsDomain}) {
-          if (_id77_cookies.length > 0) {
-             _id77_vConsole.addPlugin(JDCKPlugin);
-             _id77_vConsole.showPlugin("jd_cookie");
-            _id77_changeTabs();
+          if (_${prefix}_id77_cookies.length > 0) {
+             _${prefix}_id77_vConsole.addPlugin(JDCKPlugin);
+             _${prefix}_id77_vConsole.showPlugin("jd_cookie");
+            _${prefix}_id77_changeTabs();
           }
         }
   
-         _id77_vConsole.showPlugin("default");
+         _${prefix}_id77_vConsole.showPlugin("default");
   
         function createDom(str) {
           let newDiv = document.createElement("div");
@@ -662,7 +673,7 @@ try {
           newDiv.appendChild(newContent);
           newDiv.style.fontSize = "16px";
           newDiv.addEventListener('click', (e) => {
-             _id77_copyText(str)
+             _${prefix}_id77_copyText(str)
           })
           return newDiv;
         }
@@ -671,7 +682,7 @@ try {
       }
     }
 
-    function _id77_copyText(text) {
+    function _${prefix}_id77_copyText(text) {
       const input = document.createElement('input');
       input.setAttribute('readonly', 'readonly');
       input.setAttribute('value', text);
@@ -703,9 +714,6 @@ try {
       /(<script)/,
       `${copyObject}${mitmFuckEid}${scriptDoms}${mitmContent}$1`
     );
-  }
-  if (/(<\/(?:title|div)>)/.test(html)) {
-    html = html.replace(/(<\/(?:title|div)>)/, `$1${tools}`);
   }
 
   html = html.replace(/(<\/body>)(?![\s\S]*\1)/, `${mitmFixContent}$1`);
