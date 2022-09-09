@@ -696,22 +696,22 @@ try {
     }
   </script>`;
 
-  if (/<script.*v(C|c)onsole(\.min)?\.js.+?script>/.test(html)) {
-    html = html.replace(/<script.*v(C|c)onsole(\.min)?\.js.+?script>/, ``);
+  if (/<script.*v(C|c)onsole(\.min)?\.js.+?script>/i.test(html)) {
+    html = html.replace(/<script.*v(C|c)onsole(\.min)?\.js.+?script>/i, ``);
   }
-  if (/(<meta.+?charset="?utf\-?8[^\n]+?>)/.test(html)) {
+  if (/(<meta.+?charset="?utf\-?8[^\n]+?>)/i.test(html)) {
     html = html.replace(
-      /(<meta.+?charset="?utf\-?8[^\n]+?>)/,
+      /(<meta.+?charset="?utf\-?8[^\n]+?>)/i,
       `$1${copyObject}${mitmFuckEid}${scriptDoms}${mitmContent}`
     );
-  } else if (/(<(?:style|link)[\s\S]+?<\/head>)/.test(html)) {
+  } else if (/(<(?:style|link)[\s\S]+?<\/head>)/i.test(html)) {
     html = html.replace(
-      /(<(?:style|link)[\s\S]+?<\/head>)/,
+      /(<(?:style|link)[\s\S]+?<\/head>)/i,
       `${copyObject}${mitmFuckEid}${scriptDoms}${mitmContent}$1`
     );
   } else {
     html = html.replace(
-      /(<script)/,
+      /(<script)/i,
       `${copyObject}${mitmFuckEid}${scriptDoms}${mitmContent}$1`
     );
   }
